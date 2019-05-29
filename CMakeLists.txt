@@ -57,12 +57,10 @@ else()
     target_link_libraries(psp ${Boost_PYTHON-PY${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}_LIBRARY_RELEASE})
 endif()
 
-if(USE_LEMON)
-    if(UNIX)
-        set_target_properties(psp PROPERTIES LINK_FLAGS "-fPIC")
-    endif()
-    target_link_libraries(psp ${LEMON_LIBRARY})
-endif()    
+if(UNIX)
+    set_target_properties(psp PROPERTIES LINK_FLAGS "-fPIC")
+endif()
+target_link_libraries(psp ${LEMON_LIBRARY})
 
 # magic files to extract the release library
 
