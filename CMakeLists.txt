@@ -11,7 +11,7 @@ if(NOT USE_CXX11_ABI)
 endif()
 
 if(WIN32)
-    set(DYNAMIC_LIB_SUFFIX dll)
+    set(DYNAMIC_LIB_SUFFIX pyd)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")    
     set(DYNAMIC_LIB_SUFFIX dylib)
 else()
@@ -68,11 +68,7 @@ endif()
 
 target_link_libraries(psp ${Python3_LIBRARIES}) 
 
-if(WIN32)
-  # install debug type dll
-  set(DYNAMIC_LIB_SUFFIX pyd)
-  add_custom_command(TARGET psp POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:psp> ${PROJECT_SOURCE_DIR}/info_cluster/psp.${DYNAMIC_LIB_SUFFIX})
-endif()
+add_custom_command(TARGET psp POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:psp> ${PROJECT_SOURCE_DIR}/info_cluster/psp.${DYNAMIC_LIB_SUFFIX})
     
 
 include_directories(psp)
