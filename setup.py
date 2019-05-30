@@ -49,7 +49,6 @@ class build_ext(build_ext_orig):
                 cmake_args += [
                     '-DCMAKE_BUILD_TYPE=' + config
                 ]
-            cmake_args += ['-DUSE_BOOST_OPTION=ON', '-DUSE_LEMON=ON', '-DUSE_PYTHON=ON']
         # example of build args
         build_args = [
             '--config', config
