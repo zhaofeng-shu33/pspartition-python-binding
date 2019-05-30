@@ -38,4 +38,4 @@ test_script:
 
     C:\Python36-x64\python.exe -c "from info_cluster import psp; print(psp.__version__)"
 
-    C:\Python36-x64\python.exe test\python\graph_cut_py_test.py
+    C:\Python36-x64\python.exe graph_cut_py_test.py
