@@ -15,7 +15,7 @@ class InfoCluster:
     gamma : float, default=1.0
         Kernel coefficient for rbf kernels.
     affinity : string, default 'rbf'
-        may be one of 'precomputed', 'rbf', 'laplacian'.        
+        may be one of 'precomputed', 'rbf', 'laplacian', 'nearest_neighbors'.        
     n_neighbors : integer
         Number of neighbors to use when constructing the affinity matrix using
         the nearest neighbors method. Ignored for ``affinity='rbf'``.        
