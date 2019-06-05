@@ -6,4 +6,4 @@ info_cluster/*.pyd
 *.so
 info_cluster/*.so
 info_cluster.egg-info/
-//__pycache__
+*/__pycache__

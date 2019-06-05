@@ -94,7 +94,7 @@ class InfoCluster:
         self._set_tree_depth(self.tree, 0)
         return self.tree_depth
         
-    def print_hierachical_tree(self):
+    def print_hierarchical_tree(self):
         '''print the hirechical tree of clustering result
         '''
         if(self.tree.is_leaf()):

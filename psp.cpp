@@ -5,6 +5,7 @@
 #endif
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+#include "core/graph/info_cluster.h"
 #include "core/graph/gaussian2Dcase.h"
 #include "graph_cut_py.h"
 using namespace boost::python;
