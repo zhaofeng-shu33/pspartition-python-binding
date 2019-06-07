@@ -20,14 +20,14 @@ install:
 
     C:\Python36-x64\python.exe -m pip install wheel scikit-learn six ete3 networkx
 cache: C:\Tools\vcpkg\installed\x64-windows-v141
+
 before_build:
 - cmd: >-
 
+    C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps
+    
     echo "pass"
-build:
-- cmd: >-
-
-    C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps       
+           
     
 test_script:
 - cmd: >-
