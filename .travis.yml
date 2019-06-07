@@ -20,6 +20,7 @@ matrix:
         - /usr/src/gtest
       - pip3
   - os: windows
+    language: cpp
   #- os: osx
 
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gsl boost-python; fi 

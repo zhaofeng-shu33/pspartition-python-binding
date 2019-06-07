@@ -4,6 +4,7 @@ configuration: Release
 platform: x64
 environment:
   VCPKG_ROOT: C:\Tools\vcpkg
+  VCPKG_DEFAULT_TRIPLET:x64-windows-v141
 install:
 - cmd: >-
 
@@ -22,17 +23,20 @@ cache: C:\Tools\vcpkg\installed\x64-windows-v141
 before_build:
 - cmd: >-
 
-    mkdir build
+    echo "pass"
+    
+    # mkdir build
+        
+    # cd build
 
-    cd build
-
-    cmake -G "Visual Studio 15 2017 Win64" -DVCPKG_TARGET_TRIPLET=x64-windows-v141 -DCMAKE_TOOLCHAIN_FILE=C:\Tools\vcpkg\scripts\buildsystems\vcpkg.cmake ..\
+    # cmake -G "Visual Studio 15 2017 Win64" -DVCPKG_TARGET_TRIPLET=x64-windows-v141 -DCMAKE_TOOLCHAIN_FILE=C:\Tools\vcpkg\scripts\buildsystems\vcpkg.cmake ..\
 build:
   project: build\ALL_BUILD.vcxproj
   verbosity: minimal
 test_script:
 - cmd: >-
-    cd ..
+
+    # cd ..
 
     C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps       
 
