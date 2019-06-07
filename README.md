@@ -2,7 +2,8 @@
 [![Appveyor](https://ci.appveyor.com/api/projects/status/github/zhaofeng-shu33/info-clustering-python-binding?branch=master&svg=true)](https://ci.appveyor.com/project/zhaofeng-shu33/info-clustering-python-binding)
 # Python binding
 [![PyPI](https://img.shields.io/pypi/v/info_cluster.svg)](https://pypi.org/project/info_cluster)
-Disabled by default. The binding requires boost-python library. To enable it, run `cmake` with `-DUSE_PYTHON=ON`
+## How to build
+The binding uses boost-python library. To enable it, run `cmake` with `-DUSE_PYTHON=ON`
 To make it independent of boost dynamic library, static linking should be enabled in CMAKE configuration.
 To package the library, use `python setup.py bdist_wheel`.
 Install the package by `pip install --user info_cluster`. If your system cmake is called cmake3, you can use
@@ -49,7 +50,7 @@ print(g.get_category(2)) # get the result which has at least 2 categories, which
 
 ## Parametric Dilworth Truncation(pdt) implementation
 We provide another alternative implementation, which can be used similar to **PyGraph**.
-You shold apply a patch [preflow.patch](./preflow.patch) to `preflow.h`, which belongs to lemon library 1.3.1, see
+To make it work, you should apply a patch [preflow.patch](./preflow.patch) to `preflow.h` before building, which belongs to lemon library 1.3.1, see
 [#625](https://lemon.cs.elte.hu/trac/lemon/ticket/625).
 
 ```Python

@@ -34,8 +34,14 @@ test_script:
 - cmd: >-
     cd ..
 
-    C:\Python36-x64\python.exe setup.py install
+    C:\Python36-x64\python.exe setup.py bdistwheel        
 
+    C:\Python36-x64\python.exe -m pip install info_cluster --no-index -f dist
+
+    rmdir /Q /S info_cluster
+    
     C:\Python36-x64\python.exe -c "from info_cluster import psp; print(psp.__version__)"
 
     C:\Python36-x64\python.exe graph_cut_py_test.py
+    
+    C:\Python36-x64\python.exe -m twine upload dist/* -u zhaofeng-shu33 || ver>nul
