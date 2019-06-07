@@ -4,7 +4,7 @@ configuration: Release
 platform: x64
 environment:
   VCPKG_ROOT: C:\Tools\vcpkg
-  VCPKG_DEFAULT_TRIPLET:x64-windows-v141
+  VCPKG_DEFAULT_TRIPLET: x64-windows-v141
 install:
 - cmd: >-
 

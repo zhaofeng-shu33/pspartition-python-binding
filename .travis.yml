@@ -28,7 +28,7 @@ matrix:
 # build and install gtest library manually    
 before_install:
   - |
-    if ["$TRAVIS_OS_NAME" = "windows"]; then
+    if ["$TRAVIS_OS_NAME" == "windows"]; then
         choco install python;
         python -m pip install info_cluster;
     fi
