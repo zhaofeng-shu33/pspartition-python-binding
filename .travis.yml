@@ -30,14 +30,15 @@ before_install:
   - |
     if [ "$TRAVIS_OS_NAME" == "windows" ]; then
         choco install python;
-        python -m pip install info_cluster;
+        refreshenv;
+        python3 -m pip install info_cluster;
     fi
 install:
   - |
     if [ "$TRAVIS_OS_NAME" != "windows" ]; then
-        mkdir build;
-        cd build;
-        cmake -DCMAKE_BUILD_TYPE=Release ../; 
+        mkdir build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=Release ../
         make
         cd ..        
     fi

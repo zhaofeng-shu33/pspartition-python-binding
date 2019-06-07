@@ -24,14 +24,13 @@ before_build:
 - cmd: >-
 
     echo "pass"
-    
 build:
-  project: build\ALL_BUILD.vcxproj
-  verbosity: minimal
-test_script:
 - cmd: >-
 
     C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps       
+    
+test_script:
+- cmd: >-
 
     C:\Python36-x64\python.exe -m pip install info_cluster --no-index -f dist
 
