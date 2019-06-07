@@ -5,7 +5,7 @@ platform: x64
 environment:
   VCPKG_ROOT: C:\Tools\vcpkg
   VCPKG_DEFAULT_TRIPLET: x64-windows-v141
-  Python3_ROOT_DIR:C:\Python36-x64
+  Python3_ROOT_DIR: C:\Python36-x64
 install:
 - cmd: >-
 
