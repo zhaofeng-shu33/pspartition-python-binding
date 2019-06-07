@@ -64,7 +64,6 @@ namespace parametric {
         std::vector<double> get_critical_values() {
             std::vector<double> gLv(Lambda_list.size());
             std::copy(Lambda_list.begin(), Lambda_list.end(), gLv.begin());
-            gLv.pop_back(); // the last value is infinity
             return gLv;
         }
         std::vector<int> get_partitions() {

@@ -4,7 +4,7 @@ import unittest
 from info_cluster import psp
 import numpy as np
 from info_cluster import InfoCluster, to_py_list
-
+import pdb
         
 def construct_pos_list(x_pos_list, y_pos_list):
     return np.asarray([[x_pos_list[i], y_pos_list[i]] for i in range(len(x_pos_list))])
@@ -18,7 +18,7 @@ class TestPyGraph(unittest.TestCase):
         g.run()        
         cv_list = to_py_list(g.get_critical_values())
         p_list = to_py_list(g.get_partitions())
-        cat_1_list = to_py_list(g.get_category(2))
+        cat_1_list = to_py_list(g.get_category(4))
         # Method 2
         info_cluster = InfoCluster(gamma = _gamma)
         info_cluster.fit(np.asarray(pos_list))
