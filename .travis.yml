@@ -33,7 +33,7 @@ before_install:
         export PATH="$(powershell -Command '("Process", "Machine" | % {
         [Environment]::GetEnvironmentVariable("PATH", $_) -Split ";" -Replace "\\$", ""
         } | Select -Unique | % { cygpath $_ }) -Join ":"')";
-        python -m pip install info_cluster;
+        python3 -m pip install info_cluster;
     fi
 install:
   - |
