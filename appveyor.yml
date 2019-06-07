@@ -34,7 +34,7 @@ test_script:
 - cmd: >-
     cd ..
 
-    C:\Python36-x64\python.exe setup.py bdistwheel        
+    C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps       
 
     C:\Python36-x64\python.exe -m pip install info_cluster --no-index -f dist
 
