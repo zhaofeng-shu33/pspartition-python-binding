@@ -49,7 +49,7 @@ namespace parametric {
                 arcMap[a2] = capacity;
             }
         }
-        PyGraphPDT(const PyGraphPDT& ppdt): arcMap(g), PDT(&g, &makarcMap) {
+        PyGraphPDT(const PyGraphPDT& ppdt): arcMap(g), PDT(&g, &arcMap) {
             num_points = ppdt.num_points;
 
             for (int i = 0; i < num_points; i++)
