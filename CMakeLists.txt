@@ -39,6 +39,7 @@ else()
     if(${IS_ENTERPRISE_LINUX} STREQUAL -1) # not enterprise linux
         find_package(Boost REQUIRED python-py${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR})    
     else()
+        find_package(Boost REQUIRED python)    
         set(BP Boost_PYTHON-PY${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}_LIBRARY_RELEASE)
         set(${BP} ${Boost_LIBRARY_DIR_RELEASE}/libboost_python3-mt.so.${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION} CACHE type FILEPATH)
     endif()
