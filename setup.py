@@ -41,6 +41,8 @@ class build_ext(build_ext_orig):
                 if(VCPKG_ROOT == None):
                     raise NameError("VCPKG_ROOT environment variable not set")
                 VCPKG_DEFAULT_TRIPLET = os.environ.get('VCPKG_DEFAULT_TRIPLET', 'x64-windows')
+                if(os.environ.get('Python3_ROOT_DIR')):
+                    cmake_args += ['-DPython3_ROOT_DIR=' + os.environ['Python3_ROOT_DIR']]
                 cmake_args += [
                     '-DCMAKE_TOOLCHAIN_FILE=' + os.path.join(VCPKG_ROOT, 'scripts', 'buildsystems', 'vcpkg.cmake'),
                     '-DVCPKG_TARGET_TRIPLET=' + VCPKG_DEFAULT_TRIPLET

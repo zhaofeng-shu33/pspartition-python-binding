@@ -19,31 +19,18 @@ matrix:
       - directories:
         - /usr/src/gtest
       - pip3
-  - os: windows
-    language: cpp
   #- os: osx
 
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gsl boost-python; fi 
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
 # build and install gtest library manually    
 before_install:
-  - |
-    if [ "$TRAVIS_OS_NAME" == "windows" ]; then
-        choco install python;
-        export PATH="$(powershell -Command '("Process", "Machine" | % {
-        [Environment]::GetEnvironmentVariable("PATH", $_) -Split ";" -Replace "\\$", ""
-        } | Select -Unique | % { cygpath $_ }) -Join ":"')";
-        python3 -m pip install info_cluster;
-    fi
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release ../
+  - make
+  - cd .. 
 install:
-  - |
-    if [ "$TRAVIS_OS_NAME" != "windows" ]; then
-        mkdir build
-        cd build
-        cmake -DCMAKE_BUILD_TYPE=Release ../
-        make
-        cd ..        
-    fi
   - python -c "import pathlib" 2>/dev/null || python -m pip install pathlib
   - python setup.py install
   - python -c "import networkx" 2>/dev/null || python -m pip install -r ./info_cluster/requirement.txt
