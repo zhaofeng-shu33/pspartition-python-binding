@@ -29,7 +29,7 @@ namespace submodular {
 namespace parametric {
     class PyGraphPDT : public PDT {
     public:
-        PyGraphPDT(int np, boost::python::list py_list) : num_points(np), arcMap(g), PDT(g, arcMap)
+        PyGraphPDT(int np, boost::python::list py_list) : num_points(np), arcMap(g), PDT(&g, &arcMap)
         {
             g.reserveNode(np);
             for (int i = 0; i < np; i++)
@@ -49,7 +49,7 @@ namespace parametric {
                 arcMap[a2] = capacity;
             }
         }
-        PyGraphPDT(const PyGraphPDT& ppdt): arcMap(g), PDT(g, arcMap) {
+        PyGraphPDT(const PyGraphPDT& ppdt): arcMap(g), PDT(&g, &makarcMap) {
             num_points = ppdt.num_points;
 
             for (int i = 0; i < num_points; i++)
