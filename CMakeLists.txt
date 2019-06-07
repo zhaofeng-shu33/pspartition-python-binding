@@ -23,10 +23,6 @@ include_directories(${PROJECT_SOURCE_DIR})
 find_package(lemon REQUIRED)
 include_directories(${LEMON_INCLUDE_DIR})
 
-if("$ENV{APPVEYOR}" AND WIN32) # appveyor tries to find py37, in which vcpkg(2018.11) does not support
-    set(Python3_ROOT_DIR C:/Python36-x64)
-endif()
-
 find_package(Python3 COMPONENTS Interpreter Development)
     
     
