@@ -25,18 +25,11 @@ before_build:
 
     echo "pass"
     
-    # mkdir build
-        
-    # cd build
-
-    # cmake -G "Visual Studio 15 2017 Win64" -DVCPKG_TARGET_TRIPLET=x64-windows-v141 -DCMAKE_TOOLCHAIN_FILE=C:\Tools\vcpkg\scripts\buildsystems\vcpkg.cmake ..\
 build:
   project: build\ALL_BUILD.vcxproj
   verbosity: minimal
 test_script:
 - cmd: >-
-
-    # cd ..
 
     C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps       
 
