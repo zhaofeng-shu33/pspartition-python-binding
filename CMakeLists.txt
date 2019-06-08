@@ -23,7 +23,7 @@ include_directories(${LEMON_INCLUDE_DIR})
 
 find_package(Python3 COMPONENTS Interpreter Development)
     
-    
+set(Boost_USE_STATIC_LIBS ON)    
 if(WIN32)
     find_package(Boost REQUIRED python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR})
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
