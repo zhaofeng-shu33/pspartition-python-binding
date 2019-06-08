@@ -25,11 +25,11 @@ matrix:
         packages:
           - boost-python
           - liblemon
-          - cmake
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gsl boost-python; fi 
+ 
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
 # build and install gtest library manually    
 before_install:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then python -m pip install cmake; fi
   - mkdir build
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=Release ../
