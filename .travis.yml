@@ -18,12 +18,14 @@ matrix:
         - /usr/src/gtest
       - pip3
   - os: osx
+    python: '3.6'
     addons:
       homebrew:
         taps: zhaofeng-shu33/liblemonformula
         packages:
           - boost-python
           - liblemon
+          - cmake
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gsl boost-python; fi 
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
 # build and install gtest library manually    
