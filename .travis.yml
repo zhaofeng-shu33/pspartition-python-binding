@@ -18,29 +18,43 @@ matrix:
         - /usr/src/gtest
       - pip3
   - os: osx
+    sudo: required
     addons:
       homebrew:
         taps: zhaofeng-shu33/liblemonformula
         packages:
-          - boost-python
+          - boost-python3
           - liblemon
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gsl boost-python; fi 
+ 
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
 # build and install gtest library manually    
 before_install:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo python -m pip install cmake; fi
   - mkdir build
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=Release ../
   - make
   - cd .. 
 install:
-  - python -c "import pathlib" 2>/dev/null || python -m pip install pathlib
-  - python setup.py install
-  - python -c "import networkx" 2>/dev/null || python -m pip install -r ./info_cluster/requirement.txt
-  - python -c "import codecov" 2>/dev/null || python -m pip install codecov  
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      python -c "import pathlib" 2>/dev/null || python -m pip install pathlib
+      python setup.py install
+      python -c "import networkx" 2>/dev/null || python -m pip install -r ./info_cluster/requirement.txt
+      python -c "import codecov" 2>/dev/null || python -m pip install codecov
+    fi
+  - |
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      sudo python3 -m pip install pathlib twine wheel numpy
+      python3 setup.py bdist_wheel
+      python3 -m twine upload dist/* -u zhaofeng-shu33 || ver>nul
+    fi    
 script:
 # used for testing
-  - python -c "from info_cluster import psp;print(psp.__version__)"
-  - python -c "from info_cluster import InfoCluster"
-  - coverage run graph_cut_py_test.py
-  - codecov
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      python -c "from info_cluster import psp;print(psp.__version__)"
+      python -c "from info_cluster import InfoCluster"
+      coverage run graph_cut_py_test.py
+      codecov
+    fi
