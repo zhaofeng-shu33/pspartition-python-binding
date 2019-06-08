@@ -38,7 +38,7 @@ before_install:
   - cd .. 
 install:
   - python -c "import pathlib" 2>/dev/null || python -m pip install pathlib
-  - sudo python setup.py install
+  - python setup.py install
   - python -c "import networkx" 2>/dev/null || python -m pip install -r ./info_cluster/requirement.txt
   - python -c "import codecov" 2>/dev/null || python -m pip install codecov  
 script:
