@@ -47,7 +47,7 @@ install:
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       sudo python3 -m pip install pathlib twine wheel numpy
       python3 setup.py bdist_wheel
-      python3 -m twine upload dist/* -u zhaofeng-shu33 || ver>nul
+      python3 -m twine upload dist/* -u zhaofeng-shu33 && echo success || echo "upload failed"
     fi    
 script:
 # used for testing
