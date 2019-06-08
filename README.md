@@ -13,8 +13,8 @@ binary packages:
 
 | Platform | py3.6 | py3.7 |
 | -------- | :---: | :---: |
-| Windows  |   T   |       |
-| MacOS    |       |       |
+| Windows  |   T   |  T    |
+| MacOS    |   T   |  T    |
 | Linux    |       |       |
 
 ## Demo code

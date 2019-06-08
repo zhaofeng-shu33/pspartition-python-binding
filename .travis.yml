@@ -18,7 +18,6 @@ matrix:
         - /usr/src/gtest
       - pip3
   - os: osx
-    osx_image: xcode9.2
     sudo: required
     addons:
       homebrew:
@@ -30,7 +29,7 @@ matrix:
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
 # build and install gtest library manually    
 before_install:
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo python3 -m pip install cmake; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo python -m pip install cmake; fi
   - mkdir build
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=Release ../
