@@ -12,8 +12,6 @@ endif()
 
 if(WIN32)
     set(DYNAMIC_LIB_SUFFIX pyd)
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")    
-    set(DYNAMIC_LIB_SUFFIX dylib)
 else()
     set(DYNAMIC_LIB_SUFFIX so)
 endif()
