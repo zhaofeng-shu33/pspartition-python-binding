@@ -19,6 +19,7 @@ matrix:
       - pip3
   - os: osx
     python: '3.6'
+    sudo: required
     addons:
       homebrew:
         taps: zhaofeng-shu33/liblemonformula
