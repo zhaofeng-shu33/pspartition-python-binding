@@ -24,7 +24,7 @@ matrix:
       homebrew:
         taps: zhaofeng-shu33/liblemonformula
         packages:
-          - boost-python
+          - boost-python3
           - liblemon
  
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
