@@ -45,7 +45,7 @@ import psp # classify the three data points shown in the above figure
 g = psp.PyGraph(3, [(0,1,1),(1,2,1),(0,2,5)]) # index started from zero, similarity is 5 for vertex 0 and 2
 g.run() # use maximal flow algorithm to classify them
 print(g.get_critical_values()) # [2,5]
-print(g.get_category(2)) # get the result which has at least 2 categories, which is [1,0,1]
+print(g.get_category(2)) # get the result which has at least 2 categories, which is [0,1,0]
 ```    
 
 ## Parametric Dilworth Truncation(pdt) implementation

@@ -22,9 +22,9 @@ BOOST_PYTHON_MODULE(psp)
 		.def(self_ns::str(self_ns::self))
 		.def(self_ns::repr(self_ns::self));
 
-    class_<dList>("dList").def("__len__", &dList::size)
-        .def("clear", &dList::clear)       
-        .def("__iter__", iterator<std::list<double>>());
+	class_<dList>("dList").def("__len__", &dList::size)
+		.def("clear", &dList::clear)
+		.def("__iter__", iterator<std::list<double>>());
 
     class_<iList>("iList").def(vector_indexing_suite<iList>())
         .def(self_ns::str(self_ns::self))
@@ -41,7 +41,7 @@ BOOST_PYTHON_MODULE(psp)
     class_<submodular::PyGraph>("PyGraph", init<int,list>())
         .def("run", &submodular::PyGraph::run)
         .def("get_labels", &submodular::PyGraph::get_labels)
-        .def("get_critical_values", &submodular::PyGraph::get_critical_values)
+        .def("get_critical_values", &submodular::PyGraph::get_critical_value_vector)
         .def("get_partitions", &submodular::PyGraph::get_partitions)
         .def("get_category", &submodular::PyGraph::get_category);
 
