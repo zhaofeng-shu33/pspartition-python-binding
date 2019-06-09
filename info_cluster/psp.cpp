@@ -7,6 +7,7 @@
 #include "core/graph/info_cluster.h"
 #include "core/graph/gaussian2Dcase.h"
 #include "graph_cut_py.h"
+#include "version.h"
 using namespace boost::python;
 template class std::vector<double>;
 typedef std::vector<double> dVector;

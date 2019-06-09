@@ -170,4 +170,6 @@ def to_py_list(L):
     '''
     convert an iterable object (exported from C++ class) to numpy 1d array        
     '''
+    if(type(L) is list):
+        return L
     return [i for i in L]
