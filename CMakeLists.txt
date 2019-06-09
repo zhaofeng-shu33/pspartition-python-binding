@@ -39,7 +39,7 @@ else()
     endif()
 endif()
     
-add_library(psp SHARED psp.cpp)
+add_library(psp SHARED info_cluster/psp.cpp)
 target_include_directories(psp PUBLIC ${Python3_INCLUDE_DIRS})
 target_include_directories(psp PUBLIC ${Boost_INCLUDE_DIRS})
     

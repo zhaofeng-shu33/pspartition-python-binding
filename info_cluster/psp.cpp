@@ -1,4 +1,3 @@
-#include "config.h"
 #include <boost/config/user.hpp>
 #ifndef BOOST_ALL_DYN_LINK
     #define BOOST_PYTHON_STATIC_LIB
