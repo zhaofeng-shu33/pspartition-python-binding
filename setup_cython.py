@@ -32,7 +32,7 @@ else:
     raise FileNotFoundError(set_file)
     
 extensions = [
-    Extension('psp',sourcefiles, 
+    Extension('psp', sourcefiles, 
         include_dirs=extra_include_path,
         library_dirs=extra_lib_dir,
         libraries = [lemon_lib_name]
