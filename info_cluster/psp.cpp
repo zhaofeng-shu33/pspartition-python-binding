@@ -33,8 +33,8 @@ BOOST_PYTHON_MODULE(psp)
     class_<demo::Gaussian2DGraph>("Gaussian2DGraph", init<int,double>())
         .def("run", &submodular::InfoCluster::run)
         .def("get_critical_values", &submodular::InfoCluster::get_critical_values)
-        .def("get_x_pos_list", &demo::Gaussian2DGraph::get_x_pos_list, return_internal_reference<>())
-        .def("get_y_pos_list", &demo::Gaussian2DGraph::get_y_pos_list, return_internal_reference<>())
+        .def("get_x_pos_list", &demo::Gaussian2DGraph::get_x_pos_list)
+        .def("get_y_pos_list", &demo::Gaussian2DGraph::get_y_pos_list)
         .def("get_partitions", &submodular::InfoCluster::get_partitions)
         .def("get_category", &submodular::InfoCluster::get_category);
 
