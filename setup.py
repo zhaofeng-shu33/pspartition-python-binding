@@ -7,6 +7,7 @@ if(sys.platform == 'linux'):
     from distutils.core import setup
     from Cython.Build import cythonize
     from distutils.extension import Extension
+    build_ext_orig = Extension
 else:    
     from setuptools import setup, Extension
     from setuptools.command.build_ext import build_ext as build_ext_orig
@@ -90,7 +91,7 @@ def set_up_cython_extension():
     if sys.platform == 'win32':
         lemon_lib_name = 'lemon'
     else:
-        lemon_lib_name = 'lemon'
+        lemon_lib_name = 'emon'
         
     if(os.environ.get('VCPKG_ROOT') and os.environ.get('VCPKG_DEFAULT_TRIPLET')):
         root_dir = os.environ['VCPKG_ROOT']
