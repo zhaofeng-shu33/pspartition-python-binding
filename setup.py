@@ -23,14 +23,14 @@ class CMakeExtension(Extension):
 
     def __init__(self, name):
         # don't invoke the original build_ext for this special extension
-        super().__init__(name, sources=[])
+        super(CMakeExtension, self).__init__(name, sources=[])
         
 class build_ext(build_ext_orig):
 
     def run(self):
         for ext in self.extensions:
             self.build_cmake(ext)
-        super().run()
+        super(build_ext_orig, self).run()
 
     def build_cmake(self, ext):
         import pathlib
