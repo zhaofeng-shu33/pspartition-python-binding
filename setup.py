@@ -10,7 +10,6 @@ else:
 from setuptools import setup, Extension
 if(IS_CENTOS):
     from Cython.Build import cythonize
-    from distutils.extension import Extension
     build_ext_orig = Extension
 else:    
     from setuptools.command.build_ext import build_ext as build_ext_orig
