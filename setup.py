@@ -2,9 +2,13 @@
 # this kind of installation is more flexible and maintainable than `cmake install`
 # you can only choose one of the two installation methods.
 # before running this file, make sure psp dynamic lib exists in build directory
-import os,sys
+import os,sys,platform
+if(sys.platform == 'linux' and platform.linux_distribution()[0].find('CentOS') >= 0):
+    IS_CENTOS = True
+else:
+    IS_CENTOS = False    
 from setuptools import setup, Extension
-if(sys.platform == 'linux'):
+if(IS_CENTOS):
     from Cython.Build import cythonize
     from distutils.extension import Extension
     build_ext_orig = Extension
@@ -121,7 +125,7 @@ def set_up_cython_extension():
     ]
     return cythonize(extensions)
 
-if(sys.platform == 'linux'):
+if(IS_CENTOS):
     ext_module_class = set_up_cython_extension()
     cmd_class = {}
 else:
@@ -132,7 +136,6 @@ setup(
     version='0.4.post1', # python binding version, not the C++ lib version
     packages=['info_cluster'],
     ext_modules=ext_module_class,
-    install_requires=['numpy'],
     author="zhaofeng-shu33",
     author_email="616545598@qq.com",
     description="a hierachical clustering algorithm based on information theory",
