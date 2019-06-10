@@ -9,6 +9,6 @@ $PY36/pip wheel . -w dist/
 $PY37/pip wheel . -w dist/
 # Bundle external shared libraries into the wheels
 for whl in dist/*.whl; do
-    auditwheel repair "$whl" --plat $PLAT
+    auditwheel repair "$whl" --plat $PLAT -w dist/wheelhouse/
 done
 
