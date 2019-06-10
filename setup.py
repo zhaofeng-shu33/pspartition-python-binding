@@ -3,13 +3,12 @@
 # you can only choose one of the two installation methods.
 # before running this file, make sure psp dynamic lib exists in build directory
 import os,sys
+from setuptools import setup, Extension
 if(sys.platform == 'linux'):
-    from distutils.core import setup
     from Cython.Build import cythonize
     from distutils.extension import Extension
     build_ext_orig = Extension
 else:    
-    from setuptools import setup, Extension
     from setuptools.command.build_ext import build_ext as build_ext_orig
 
 
@@ -114,7 +113,7 @@ def set_up_cython_extension():
         raise FileNotFoundError(set_file)
         
     extensions = [
-        Extension('psp', sourcefiles, 
+        Extension('info_cluster.psp', sourcefiles, 
             include_dirs=extra_include_path,
             library_dirs=extra_lib_dir,
             libraries = [lemon_lib_name]
