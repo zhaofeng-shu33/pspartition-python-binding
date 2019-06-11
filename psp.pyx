@@ -4,6 +4,9 @@ from info_cluster cimport InfoCluster
 from info_cluster cimport Gaussian2DGraph as G2G
 ctypedef vector[int] v_i
 ctypedef vector[double] v_d 
+cdef extern from "version.h":
+    double PSP_VERSION_MAJOR
+__version__ = PSP_VERSION_MAJOR
 cdef class PyGraph:
     cdef InfoCluster* ic
     
