@@ -132,7 +132,7 @@ else:
     cmd_class = {'build_ext': build_ext,}
 setup(
     name='info_cluster',
-    version='0.4.post1', # python binding version, not the C++ lib version
+    version='0.4.post2', # python binding version, not the C++ lib version
     packages=['info_cluster'],
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",
