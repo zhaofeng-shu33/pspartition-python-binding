@@ -5,6 +5,9 @@ matrix:
     sudo: required
     language: python
     python: '3.5'
+    services: docker
+    env: DOCKER_IMAGE=zhaofengshu33/lemon:v2
+         PLAT=manylinux2010_x86_64
     addons:
       apt:
         sources:
@@ -35,9 +38,10 @@ matrix:
         packages:
           - boost-python3
           - liblemon
- 
+
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
 # build and install gtest library manually    
+
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo python -m pip install cmake; fi
   - mkdir build
@@ -45,6 +49,7 @@ before_install:
   - cmake -DCMAKE_BUILD_TYPE=Release ../
   - make
   - cd .. 
+
 install:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -52,6 +57,7 @@ install:
       python setup.py install
       python -c "import networkx" 2>/dev/null || python -m pip install -r ./info_cluster/requirement.txt
       python -c "import codecov" 2>/dev/null || python -m pip install codecov
+      python -m pip install twine
     fi
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -67,4 +73,6 @@ script:
       python -c "from info_cluster import InfoCluster"
       coverage run graph_cut_py_test.py
       codecov
+      docker run --rm -e PLAT=$PLAT -v `pwd`:/code $DOCKER_IMAGE /bin/bash -c 'cd /code; ./build.sh'
+      python -m twine upload dist/wheelhouse/*.whl -u zhaofeng-shu33 && echo success || echo "upload failed"
     fi

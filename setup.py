@@ -10,7 +10,6 @@ else:
 from setuptools import setup, Extension
 if(IS_CENTOS):
     from Cython.Build import cythonize
-    from distutils.extension import Extension
     build_ext_orig = Extension
 else:    
     from setuptools.command.build_ext import build_ext as build_ext_orig
@@ -133,7 +132,7 @@ else:
     cmd_class = {'build_ext': build_ext,}
 setup(
     name='info_cluster',
-    version='0.4.post1', # python binding version, not the C++ lib version
+    version='0.4.post2', # python binding version, not the C++ lib version
     packages=['info_cluster'],
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",
