@@ -11,21 +11,16 @@ use `python setup.py` to build the wheel
 
 ## Procedure specific
 ### Windows
-We use `vcpkg` to do the job. Because the weired dependency, it is impossible to build for multiple version of python within one
-version of vcpkg.
+We use `vcpkg` to do the job. Because the weired dependency, it is impossible to build for multiple version of python within one version of vcpkg. Therefore, only python3.6 is supported.
 Currently We use appveyor to build for python3.6 since its default vcpkg version is 2018.11 which supports python3.6.
-We use local build to package for python3.7 since my vcpkg is up-to-date with upstream.
 
+## Mac
 
-### Mac
 We use `homebrew` personal tap to package dependencies like gtest and liblemon.
 Notice that liblemon should be patched.
 
 ### Manylinux
-We use Cython to distribute the python-binding instead of boost-python.
-```shell
-python3 -m pip wheel . -w dist
-```
+We use Cython to distribute the python-binding instead of boost-python. The manylinux wheel is built by specific docker image.
 
 
 
