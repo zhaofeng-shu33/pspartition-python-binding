@@ -22,7 +22,11 @@ We use `homebrew` personal tap to package dependencies like gtest and liblemon.
 Notice that liblemon should be patched.
 
 ### Manylinux
-Coming soon.
+We use Cython to distribute the python-binding instead of boost-python.
+```shell
+python3 -m pip wheel . -w dist
+```
+
 
 
 ## Installation Test
