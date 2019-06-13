@@ -4,17 +4,14 @@
 # Python binding
 [![PyPI](https://img.shields.io/pypi/v/info_cluster.svg)](https://pypi.org/project/info_cluster)
 ## How to build
-The binding uses boost-python library. To enable it, run `cmake` with `-DUSE_PYTHON=ON`
-To make it independent of boost dynamic library, static linking should be enabled in CMAKE configuration.
+The binding uses `Cython`. 
 To package the library, use `python setup.py bdist_wheel`.
-Install the package by `pip install --user info_cluster`. If your system cmake is called cmake3, you can use
-CMAKE=cmake3 pip install --user info_cluster`.
-Below is the prebuild
-binary packages:
+Install the package by `pip install --user info_cluster`. 
+Below is the prebuilt binary packages:
 
 | Platform | py3.6 | py3.7 |
 | -------- | :---: | :---: |
-| Windows  |   T   |       |
+| Windows  |   T   |   T   |
 | MacOS    |   T   |   T   |
 | Linux    |   T   |   T   |
 

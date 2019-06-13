@@ -30,20 +30,26 @@ class InfoCluster:
         self.tree = Tree()
         self.tree_depth = 0
         
-    def fit(self, X, use_pdt = False, initialize_tree = True):
+    def fit(self, X, use_pdt=False, use_psp_i=False, initialize_tree = True):
         '''Construct an affinity graph from X using rbf kernel function,
         then applies info clustering to this affinity graph.
         Parameters
         ----------
         X : array-like, shape (n_samples, n_features)
             if affinity='precomputed', X is networkx like object or affinity matrix(upper triangle)
-           
+        use_pdt : whether to use prametric Dilworth truncation method
+        use_psp_i : whether to use improved principal sequence of partition method
         '''
+        if(use_pdt and use_psp_i):
+            raise ValueError("only one of use_pdt and use_psp_i can be set True") 
         self.tree = Tree() # clear the tree
         if(self.n_clusters is not None and use_pdt == False):
             return self.get_category(self.n_clusters, X)
         self._init_g(X, use_pdt)
-        self.g.run()
+        if(use_psp_i):
+            self.g.run_psp_i()
+        else:
+            self.g.run()
         
         self.critical_values = to_py_list(self.g.get_critical_values())
         self.partition_num_list = to_py_list(self.g.get_partitions())  

@@ -31,7 +31,10 @@ cdef class PyGraph:
         
     def run(self):
         self.ic.run()
-    
+
+    def run_psp_i(self):
+        self.ic.run_psp_i()
+        
     def get_category(self, i):
         return self.ic.get_category(i)
 

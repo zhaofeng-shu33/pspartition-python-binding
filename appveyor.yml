@@ -16,9 +16,9 @@ install:
     
     copy preflow.h /Y C:\Tools\vcpkg\installed\x64-windows\include\lemon\
 
-    C:\Python36-x64\python.exe -m pip install wheel cython
+    C:\Python36-x64\python.exe -m pip install wheel cython twine
     
-    C:\Python37-x64\python.exe -m pip install wheel cython
+    C:\Python37-x64\python.exe -m pip install wheel cython twine
     
 cache: C:\Tools\vcpkg\installed\x64-windows
 build: off

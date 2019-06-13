@@ -10,6 +10,8 @@ cdef extern from "core/graph/info_cluster.h" namespace "submodular":
         v_i get_category(int)
         v_i get_labels(int)
         void run_pdt()
+        void run_psp_i()
+        
 cdef extern from "core/graph/gaussian2Dcase.h" namespace "demo":        
     cdef cppclass Gaussian2DGraph:
         Gaussian2DGraph(int, double) except +
