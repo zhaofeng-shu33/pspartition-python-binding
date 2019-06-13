@@ -1,8 +1,8 @@
 version: 1.0.{build}
 image: Visual Studio 2017
-configuration: Release
-platform: x64
 environment:
+  TWINE_PASSWORD:
+    secure: cDgJ0l9hLc0cTXODMVfjnA==
   VCPKG_ROOT: C:\Tools\vcpkg
   Python3_ROOT_DIR: C:\Python36-x64
 install:
@@ -22,14 +22,14 @@ install:
     
 cache: C:\Tools\vcpkg\installed\x64-windows
 
-before_build:
+build_script:
 - cmd: >-
 
     C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps
     
     C:\Python37-x64\python.exe -m pip wheel . -w dist --no-deps
                
-test_script:
+deploy_script:
 - cmd: >-
     
     C:\Python36-x64\python.exe -m twine upload dist/* -u zhaofeng-shu33 || ver>nul
