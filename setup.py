@@ -8,83 +8,19 @@ if(sys.platform == 'linux' and platform.linux_distribution()[0].find('CentOS') >
 else:
     IS_CENTOS = False    
 from setuptools import setup, Extension
-if(IS_CENTOS):
-    from Cython.Build import cythonize
-    build_ext_orig = Extension
-else:    
-    from setuptools.command.build_ext import build_ext as build_ext_orig
-
+from Cython.Build import cythonize
 
 with open('README.md') as fh:
     long_description = fh.read()
     
-class CMakeExtension(Extension):
-
-    def __init__(self, name):
-        # don't invoke the original build_ext for this special extension
-        super(CMakeExtension, self).__init__(name, sources=[])
-        
-class build_ext(build_ext_orig):
-
-    def run(self):
-        for ext in self.extensions:
-            self.build_cmake(ext)
-        super(build_ext_orig, self).run()
-
-    def build_cmake(self, ext):
-        import pathlib
-        from shutil import copy
-        cwd = pathlib.Path().absolute()
-
-        # these dirs will be created in build_py, so if you don't have
-        # any python sources to bundle, the dirs will be missing
-        build_temp = pathlib.Path('build')
-        build_temp.mkdir(parents=True, exist_ok=True)
-
-        # example of cmake args
-        config = 'Debug' if self.debug else 'Release'
-        cmake_args = []
-        if not(os.path.exists('CMakeCache.txt')):
-            if sys.platform == 'win32':
-                VCPKG_ROOT = os.environ.get('VCPKG_ROOT',None)
-                if(VCPKG_ROOT == None):
-                    raise NameError("VCPKG_ROOT environment variable not set")
-                VCPKG_DEFAULT_TRIPLET = os.environ.get('VCPKG_DEFAULT_TRIPLET', 'x64-windows')
-                if(os.environ.get('APPVEYOR')):
-                    cmake_args += ['-G', 'Visual Studio 15 2017 Win64']
-                cmake_args += [
-                    '-DCMAKE_TOOLCHAIN_FILE=' + os.path.join(VCPKG_ROOT, 'scripts', 'buildsystems', 'vcpkg.cmake'),
-                    '-DVCPKG_TARGET_TRIPLET=' + VCPKG_DEFAULT_TRIPLET
-                ]
-            else:
-                cmake_args += [
-                    '-DCMAKE_BUILD_TYPE=' + config
-                ]
-        # example of build args
-        build_args = [
-            '--config', config
-        ]
-
-        os.chdir(str(build_temp))
-        if(os.environ.get('CMAKE')):
-            cmake_exe = os.environ['CMAKE']
-        else:
-            cmake_exe = 'cmake'
-        self.spawn([cmake_exe, str(cwd)] + cmake_args)
-        if not self.dry_run:
-            self.spawn([cmake_exe, '--build', '.'] + build_args)
-        os.chdir(str(cwd))            
-        # after building, rename and copy the file to the lib directory 
-        if sys.platform == 'win32':
-            psp_path = os.path.join(str(build_temp), config, 'psp.dll')
-            copy(psp_path, self.get_ext_fullpath(ext.name))            
-        else:
-            if(sys.platform == 'darwin'):
-                psp_name = 'libpsp.dylib'
-            else:
-                psp_name = 'libpsp.so'
-            copy(os.path.join(str(build_temp), psp_name), self.get_ext_fullpath(ext.name))
-
+def find_all_cpp(dir):
+    cpp_list = []
+    for dp, dn, fn in os.walk(dir):
+        for i in fn:
+            if(i.find('cpp')>0):
+                cpp_list.append(os.path.join(dp, i))
+    return cpp_list   
+    
 def set_up_cython_extension():
     extra_include_path = []
     extra_include_path.append(os.path.join(os.getcwd(),'psp'))
@@ -95,9 +31,9 @@ def set_up_cython_extension():
     else:
         lemon_lib_name = 'emon'
         
-    if(os.environ.get('VCPKG_ROOT') and os.environ.get('VCPKG_DEFAULT_TRIPLET')):
+    if(os.environ.get('VCPKG_ROOT')):
         root_dir = os.environ['VCPKG_ROOT']
-        triplet = os.environ['VCPKG_DEFAULT_TRIPLET']
+        triplet = os.environ.get('VCPKG_DEFAULT_TRIPLET', 'x64-windows')
         include_dir = os.path.join(root_dir, 'installed', triplet, 'include')
         if(os.path.exists(include_dir)):
             extra_include_path.append(include_dir)
@@ -106,10 +42,8 @@ def set_up_cython_extension():
             extra_lib_dir.append(lib_dir)
     # collect library
     sourcefiles = ['psp.pyx']
-    for i in os.listdir(os.path.join(os.getcwd(),'psp','core')):
-        if(i.find('cpp')>0):
-            sourcefiles.append(os.path.join(os.getcwd(),'psp','core',i))
-    set_file = os.path.join(os.getcwd(),'psp','set', 'set_stl.cpp')        
+    sourcefiles.extend(find_all_cpp(os.path.join(os.getcwd(), 'psp', 'core')))
+    set_file = os.path.join(os.getcwd(), 'psp', 'set', 'set_stl.cpp')        
     if(os.path.exists(set_file)):
         sourcefiles.append(set_file)
     else:
@@ -124,12 +58,8 @@ def set_up_cython_extension():
     ]
     return cythonize(extensions)
 
-if(IS_CENTOS):
-    ext_module_class = set_up_cython_extension()
-    cmd_class = {}
-else:
-    ext_module_class = [CMakeExtension('info_cluster/psp')]
-    cmd_class = {'build_ext': build_ext,}
+ext_module_class = set_up_cython_extension()
+
 setup(
     name='info_cluster',
     version='0.4.post2', # python binding version, not the C++ lib version
@@ -145,5 +75,4 @@ setup(
         "Programming Language :: Python :: 3",
     ], 
     license="Apache License Version 2.0",
-    cmdclass=cmd_class   
 )
