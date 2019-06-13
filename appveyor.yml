@@ -17,6 +17,9 @@ install:
     copy preflow.h /Y C:\Tools\vcpkg\installed\x64-windows\include\lemon\
 
     C:\Python36-x64\python.exe -m pip install wheel cython
+    
+    C:\Python37-x64\python.exe -m pip install wheel cython
+    
 cache: C:\Tools\vcpkg\installed\x64-windows
 
 before_build:
@@ -24,18 +27,9 @@ before_build:
 
     C:\Python36-x64\python.exe -m pip wheel . -w dist --no-deps
     
-    echo "pass"
-           
-    
+    C:\Python37-x64\python.exe -m pip wheel . -w dist --no-deps
+               
 test_script:
 - cmd: >-
-
-    C:\Python36-x64\python.exe -m pip install info_cluster --no-index -f dist
-
-    rmdir /Q /S info_cluster
-    
-    C:\Python36-x64\python.exe -c "from info_cluster import psp; print(psp.__version__)"
-
-    C:\Python36-x64\python.exe graph_cut_py_test.py
     
     C:\Python36-x64\python.exe -m twine upload dist/* -u zhaofeng-shu33 || ver>nul
