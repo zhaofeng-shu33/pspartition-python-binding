@@ -53,6 +53,7 @@ def set_up_cython_extension():
         Extension('info_cluster.psp', sourcefiles, 
             include_dirs=extra_include_path,
             library_dirs=extra_lib_dir,
+            extra_compile_args=["-std=c++11"],
             libraries = [lemon_lib_name]
         )
     ]
