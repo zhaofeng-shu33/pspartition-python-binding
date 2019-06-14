@@ -48,12 +48,14 @@ def set_up_cython_extension():
         sourcefiles.append(set_file)
     else:
         raise FileNotFoundError(set_file)
-        
+    extra_compile_flags_list = []
+    if(sys.platform == 'darwin'):
+        extra_compile_flags_list.append('std=c++11')
     extensions = [
         Extension('info_cluster.psp', sourcefiles, 
             include_dirs=extra_include_path,
             library_dirs=extra_lib_dir,
-            extra_compile_args=["-std=c++11"],
+            extra_compile_args=extra_comple_flags_list,
             libraries = [lemon_lib_name]
         )
     ]
