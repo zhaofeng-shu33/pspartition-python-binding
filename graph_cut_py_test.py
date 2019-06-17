@@ -3,7 +3,7 @@ import math
 import unittest
 from info_cluster import psp
 import numpy as np
-from info_cluster import InfoCluster, to_py_list
+from info_cluster import InfoCluster
 import pdb
         
 def construct_pos_list(x_pos_list, y_pos_list):
@@ -16,9 +16,9 @@ class TestPyGraph(unittest.TestCase):
         pos_list = construct_pos_list(g.get_x_pos_list(), g.get_y_pos_list())
         # Method 1
         g.run()        
-        cv_list = to_py_list(g.get_critical_values())
-        p_list = to_py_list(g.get_partitions())
-        cat_1_list = to_py_list(g.get_category(4))
+        cv_list = g.get_critical_values()
+        p_list = g.get_partitions()
+        cat_1_list = g.get_category(4)
         # Method 2
         info_cluster = InfoCluster(gamma = _gamma)
         info_cluster.fit(np.asarray(pos_list))
@@ -39,9 +39,9 @@ class TestPyGraph(unittest.TestCase):
         pos_list = construct_pos_list(g.get_x_pos_list(), g.get_y_pos_list())
         # Method 1
         g.run()
-        cv_list = to_py_list(g.get_critical_values())
-        p_list = to_py_list(g.get_partitions())
-        cat_1_list = to_py_list(g.get_category(4))
+        cv_list = g.get_critical_values()
+        p_list = g.get_partitions()
+        cat_1_list = g.get_category(4)
         # Method 2
         info_cluster = InfoCluster(gamma=_gamma)
         info_cluster.fit(pos_list)
@@ -64,7 +64,7 @@ class TestPyGraph(unittest.TestCase):
         # get the >=4 clusters solution using two method
         # Method 1
         g.run()
-        cat_1_list = to_py_list(g.get_category(4))
+        cat_1_list = g.get_category(4)
         # Method 2
         info_cluster = InfoCluster(gamma=_gamma)
         cat_2_list = info_cluster.get_category(4, pos_list)
@@ -77,11 +77,11 @@ class TestPyGraph(unittest.TestCase):
         # See https://github.com/zhaofeng-shu33/principal_sequence_of_partition/projects/1
         g = psp.PyGraph(3, [(0,1,1), (0,2,2)])
         g.run()
-        cat_1_list = to_py_list(g.get_category(1))
+        cat_1_list = g.get_category(1)
         self.assertEqual(cat_1_list, [0, 0, 0])
-        cat_2_list = to_py_list(g.get_category(2))
+        cat_2_list = g.get_category(2)
         self.assertEqual(cat_2_list, [0, 1, 0])
-        cat_3_list = to_py_list(g.get_category(3))
+        cat_3_list = g.get_category(3)
         self.assertEqual(cat_3_list, [0, 1, 2])
         
 def get_total_diff(L1, L2):

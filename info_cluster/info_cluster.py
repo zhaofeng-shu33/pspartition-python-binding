@@ -8,7 +8,7 @@ from . import psp # [package] principal sequence of partition
 
 class InfoCluster:
     '''Info clustering is a kind of hierarchical clustering method.
-    It uses top down approach to build the hierarchical tree.
+    It computes principal sequence of partition to build the hierarchical tree.
     
     Parameters
     ----------
@@ -51,8 +51,8 @@ class InfoCluster:
         else:
             self.g.run()
         
-        self.critical_values = to_py_list(self.g.get_critical_values())
-        self.partition_num_list = to_py_list(self.g.get_partitions())  
+        self.critical_values = self.g.get_critical_values()
+        self.partition_num_list = self.g.get_partitions() 
         if(initialize_tree):
             self._get_hierachical_tree()  
             
@@ -120,13 +120,13 @@ class InfoCluster:
         '''
         if(X is not None):
             self._init_g(X)
-            return to_py_list(self.g.get_labels(i))
+            return self.g.get_labels(i)
         else:
             try:
                 self.g
             except AttributeError:
                 raise AttributeError('no data provided and category cannot be got')
-            return to_py_list(self.g.get_category(i))        
+            return self.g.get_category(i)
             
     def get_num_cat(self, min_num):
         '''
@@ -172,10 +172,3 @@ class InfoCluster:
         else:
             self.g = psp.PyGraph(n_samples, sim_list)    
 
-def to_py_list(L):
-    '''
-    convert an iterable object (exported from C++ class) to numpy 1d array        
-    '''
-    if(type(L) is list):
-        return L
-    return [i for i in L]
