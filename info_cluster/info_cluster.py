@@ -14,8 +14,9 @@ class InfoCluster:
     ----------
     gamma : float, default=1.0
         Kernel coefficient for rbf kernels.
-    affinity : string, default 'rbf'
+    affinity : string or list, default 'rbf'
         may be one of 'precomputed', 'rbf', 'laplacian', 'nearest_neighbors'.        
+        if list, can only be ['rbf','nearest_neighbors'] or ['laplacian', 'nearest_neighbors']
     n_neighbors : integer
         Number of neighbors to use when constructing the affinity matrix using
         the nearest neighbors method. Ignored for ``affinity='rbf'``.        
@@ -157,8 +158,10 @@ class InfoCluster:
                 affinity_matrix = 0.5 * (connectivity + connectivity.T)        
             elif(self.affinity == 'laplacian'):
                 affinity_matrix = pairwise_kernels(X, metric='laplacian', gamma = self._gamma)
-            else:
+            elif(self.affinity == 'rbf'):
                 affinity_matrix = pairwise_kernels(X, metric='rbf', gamma = self._gamma)            
+            else:
+                raise NameError("Unknown affinity name %s" % self.affinity)
         else:
             sparse_mat = nx.adjacency_matrix(X)
             affinity_matrix = np.asarray(sparse_mat.todense(),dtype=float)
