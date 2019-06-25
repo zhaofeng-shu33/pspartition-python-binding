@@ -155,11 +155,22 @@ class InfoCluster:
                 affinity_matrix = X
             elif(self.affinity == 'nearest_neighbors'):
                 connectivity = kneighbors_graph(X, n_neighbors=self.n_neighbors,include_self=True)
-                affinity_matrix = 0.5 * (connectivity + connectivity.T)        
+                affinity_matrix = connectivity.todense()     
             elif(self.affinity == 'laplacian'):
                 affinity_matrix = pairwise_kernels(X, metric='laplacian', gamma = self._gamma)
             elif(self.affinity == 'rbf'):
-                affinity_matrix = pairwise_kernels(X, metric='rbf', gamma = self._gamma)            
+                affinity_matrix = pairwise_kernels(X, metric='rbf', gamma = self._gamma)
+            elif(type(self.affinity) is list):
+                if(self.affinity.count('nearest_neighbors') == 0):
+                    raise ValueError("affinity list should specify nearest_neighbors")
+                connectivity = kneighbors_graph(X, n_neighbors=self.n_neighbors,include_self=True)
+                if(self.affinity.count('laplacian')>0):
+                    affinity_matrix = pairwise_kernels(X, metric='laplacian', gamma = self._gamma)
+                elif(self.affinity.count('rbf')>0):
+                    affinity_matrix = pairwise_kernels(X, metric='rbf', gamma = self._gamma)
+                else:
+                    raise ValueError("affinity list should specify laplacian or rbf")
+                affinity_matrix = affinity_matrix * connectivity.todense()
             else:
                 raise NameError("Unknown affinity name %s" % self.affinity)
         else:
