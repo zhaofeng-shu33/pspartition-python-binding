@@ -160,7 +160,7 @@ class InfoCluster:
                 affinity_matrix = pairwise_kernels(X, metric='laplacian', gamma = self._gamma)
             elif(self.affinity == 'rbf'):
                 affinity_matrix = pairwise_kernels(X, metric='rbf', gamma = self._gamma)
-            elif(type(self.affinity) is list):
+            elif(type(self.affinity) is not str):
                 if(self.affinity.count('nearest_neighbors') == 0):
                     raise ValueError("affinity list should specify nearest_neighbors")
                 connectivity = kneighbors_graph(X, n_neighbors=self.n_neighbors,include_self=True)
