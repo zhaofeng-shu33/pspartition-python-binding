@@ -61,6 +61,7 @@ class InfoCluster:
         self.fit(X)
 
     def _add_node(self, root, node_list, num_index):
+        root.add_features(cv=self.critical_values[num_index-1])
         label_list = self.get_category(self.partition_num_list[num_index])
         cat_list = []
         for i in node_list:
