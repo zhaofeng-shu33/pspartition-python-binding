@@ -59,3 +59,9 @@ g.run() # use maximal flow algorithm to classify them
 print(g.get_critical_values()) # [2,5]
 print(g.get_category(2)) # get the result which has at least 2 categories, which is [0,1,0]
 ```
+
+## ChangeLog
+
+- Version 0.2: expose `PSP` (C++) class, which is high customizable in python.
+- Version 0.3: expose `PyGraphPDT` (C++) class, which has similar API as `PyGraph` but different inner implementation.
+- Version 0.5: expose `run_psp_i` ` for `InfoCluster`

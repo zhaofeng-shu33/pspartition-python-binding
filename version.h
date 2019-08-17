@@ -1,1 +1,0 @@
-#define PSP_VERSION_MAJOR 1.4
