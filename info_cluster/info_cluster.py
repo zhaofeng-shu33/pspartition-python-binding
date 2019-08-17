@@ -61,6 +61,7 @@ class InfoCluster:
         self.fit(X)
 
     def _add_node(self, root, node_list, num_index):
+        root.add_features(cv=self.critical_values[num_index-1])
         label_list = self.get_category(self.partition_num_list[num_index])
         cat_list = []
         for i in node_list:
@@ -144,11 +145,11 @@ class InfoCluster:
             n_samples = len(X)
         elif(type(X) is np.ndarray):
             n_samples = X.shape[0]
-        elif(type(X) is nx.Graph):
+        elif(type(X) is nx.Graph or type(X) is nx.DiGraph):
             n_samples = nx.number_of_nodes(X)
             is_nx_graph = True
         else:
-            raise TypeError('type(X) must be list, numpy.ndarray or networkx.Graph')
+            raise TypeError('type(X) must be list, numpy.ndarray, networkx.Graph or networkx.DiGraph')
         sim_list = []            
         if not(is_nx_graph):    
             if(self.affinity == 'precomputed'):

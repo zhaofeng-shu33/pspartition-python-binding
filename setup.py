@@ -65,7 +65,7 @@ ext_module_class = set_up_cython_extension()
 
 setup(
     name='info_cluster',
-    version='0.5', # python binding version, not the C++ lib version
+    version='0.5.post2', # python binding version, not the C++ lib version
     packages=['info_cluster'],
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",
