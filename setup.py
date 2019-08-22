@@ -20,7 +20,12 @@ def find_all_cpp(dir):
             if(i.find('cpp')>0):
                 cpp_list.append(os.path.join(dp, i))
     return cpp_list   
-    
+def add_source_file(sourcefiles, cpp_file):   
+    if(os.path.exists(cpp_file)):
+        sourcefiles.append(cpp_file)
+    else:
+        raise FileNotFoundError(cpp_file)
+        
 def set_up_cython_extension():
     extra_include_path = []
     extra_include_path.append(os.path.join(os.getcwd(),'psp'))
@@ -43,11 +48,10 @@ def set_up_cython_extension():
     # collect library
     sourcefiles = ['psp.pyx']
     sourcefiles.extend(find_all_cpp(os.path.join(os.getcwd(), 'psp', 'core')))
-    set_file = os.path.join(os.getcwd(), 'psp', 'set', 'set_stl.cpp')        
-    if(os.path.exists(set_file)):
-        sourcefiles.append(set_file)
-    else:
-        raise FileNotFoundError(set_file)
+    set_file = os.path.join(os.getcwd(), 'psp', 'set', 'set_stl.cpp')    
+    add_source_file(sourcefiles, set_file)
+    thread_file = os.path.join(os.getcwd(), 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
+    add_source_file(sourcefiles, thread_file)
     extra_compile_flags_list = []
     if(sys.platform == 'darwin'):
         extra_compile_flags_list.append('-std=c++11')
@@ -65,7 +69,7 @@ ext_module_class = set_up_cython_extension()
 
 setup(
     name='info_cluster',
-    version='0.5.post2', # python binding version, not the C++ lib version
+    version='0.6', # python binding version, not the C++ lib version
     packages=['info_cluster'],
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",

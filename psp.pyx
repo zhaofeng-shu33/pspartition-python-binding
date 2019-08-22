@@ -34,7 +34,7 @@ cdef class PyGraph:
 
     def run_psp_i(self):
         self.ic.run_psp_i()
-        
+                
     def get_category(self, i):
         return self.ic.get_category(i)
 
@@ -65,6 +65,9 @@ cdef class PyGraphPDT:
         
     def run(self):
         self.ic.run_pdt()
+        
+    def run_pdt_r(self):
+        self.ic.run_pdt_r()
     
     def get_category(self, i):
         return self.ic.get_category(i)
