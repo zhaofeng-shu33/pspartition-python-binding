@@ -54,7 +54,7 @@ def set_up_cython_extension():
     add_source_file(sourcefiles, thread_file)
     extra_compile_flags_list = []
     if(sys.platform == 'darwin'):
-        extra_compile_flags_list.append('-std=c++11')
+        extra_compile_flags_list.append('-std=c++14')
     extensions = [
         Extension('info_cluster.psp', sourcefiles, 
             include_dirs=extra_include_path,
