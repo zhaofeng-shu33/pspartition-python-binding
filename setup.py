@@ -53,13 +53,16 @@ def set_up_cython_extension():
     thread_file = os.path.join(os.getcwd(), 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
     add_source_file(sourcefiles, thread_file)
     extra_compile_flags_list = []
-    if(sys.platform == 'darwin'):
+    extra_link_flags_list = []    
+    if(sys.platform != 'win32'):
         extra_compile_flags_list.append('-std=c++14')
+        extra_link_flags_list.append('-pthread')            
     extensions = [
         Extension('info_cluster.psp', sourcefiles, 
             include_dirs=extra_include_path,
             library_dirs=extra_lib_dir,
             extra_compile_args=extra_compile_flags_list,
+            extra_link_args=extra_link_flags_list,
             libraries = [lemon_lib_name]
         )
     ]
@@ -69,7 +72,7 @@ ext_module_class = set_up_cython_extension()
 
 setup(
     name='info_cluster',
-    version='0.6', # python binding version, not the C++ lib version
+    version='0.6.post1', # python binding version, not the C++ lib version
     packages=['info_cluster'],
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",

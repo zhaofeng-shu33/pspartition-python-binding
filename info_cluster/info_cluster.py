@@ -47,7 +47,7 @@ class InfoCluster:
         self.tree = Tree() # clear the tree
         if(self.n_clusters is not None and use_pdt == False):
             return self.get_category(self.n_clusters, X)
-        self._init_g(X, use_pdt and use_pdt_r)
+        self._init_g(X, use_pdt or use_pdt_r)
         if(use_psp_i):
             self.g.run_psp_i()
         elif(use_pdt_r):
