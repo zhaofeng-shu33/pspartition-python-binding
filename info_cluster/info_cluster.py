@@ -1,3 +1,4 @@
+# pylint: disable=cyclic-import
 """info cluster module provides InfoCluster class
 """
 import numpy as np
@@ -5,8 +6,8 @@ from sklearn.metrics.pairwise import pairwise_kernels
 from sklearn.neighbors import kneighbors_graph
 import networkx as nx
 from ete3 import Tree
-
-from . import psp # [package] principal sequence of partition
+# [package] principal sequence of partition
+from . import psp # pylint: disable=no-name-in-module
 
 class InfoCluster: # pylint: disable=too-many-instance-attributes
     '''Info clustering is a kind of hierarchical clustering method.
