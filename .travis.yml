@@ -28,7 +28,7 @@ matrix:
 
 install:
   - |
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    if [ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_BRANCH" == "master" ]; then
       sudo python3 -m pip install twine wheel cython
       python3 setup.py bdist_wheel
       python3 -m twine upload dist/* -u zhaofeng-shu33 && echo success || echo "upload failed"
@@ -37,6 +37,11 @@ script:
 # used for testing
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      pip install pylint
+      pylint info_cluster
+    fi
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_BRANCH" == "master" ]; then
       python -m pip install --user twine
       docker run --rm -e PLAT=$PLAT -v `pwd`:/code $DOCKER_IMAGE /bin/bash -c 'cd /code; ./build.sh'
       python -m twine upload dist/wheelhouse/*.whl -u zhaofeng-shu33 && echo success || echo "upload failed"
