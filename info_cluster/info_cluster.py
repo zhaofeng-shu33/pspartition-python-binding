@@ -3,12 +3,12 @@
 import numpy as np
 from sklearn.metrics.pairwise import pairwise_kernels
 from sklearn.neighbors import kneighbors_graph
-from ete3 import Tree
 import networkx as nx
+from ete3 import Tree
 
 from . import psp # [package] principal sequence of partition
 
-class InfoCluster:
+class InfoCluster: # pylint: disable=too-many-instance-attributes
     '''Info clustering is a kind of hierarchical clustering method.
     It computes principal sequence of partition to build the hierarchical tree.
 
@@ -36,7 +36,7 @@ class InfoCluster:
         self.critical_values = []
         self.partition_num_list = []
 
-    def fit(self, X, use_pdt=False, use_psp_i=False, use_pdt_r=False, initialize_tree=True):
+    def fit(self, X, use_pdt=False, use_psp_i=False, use_pdt_r=False, initialize_tree=True): # pylint: disable=too-many-arguments
         '''Construct an affinity graph from X using rbf kernel function,
         then applies info clustering to this affinity graph.
         Parameters
@@ -50,7 +50,7 @@ class InfoCluster:
         if((use_pdt and use_psp_i) or (use_psp_i and use_pdt_r)):
             raise ValueError("only one of use_pdt(_r) and use_psp_i can be set True")
         self.tree = Tree() # clear the tree
-        if self.n_clusters is not None and use_pdt == False:
+        if self.n_clusters is not None and use_pdt is False:
             return self.get_category(self.n_clusters, X)
         self._init_g(X, use_pdt or use_pdt_r)
         if use_psp_i:
@@ -105,6 +105,7 @@ class InfoCluster:
             self._set_tree_depth(node_i, depth+1)
 
     def get_tree_depth(self):
+        '''get clustering tree depth'''
         if self.tree.is_leaf():
             self._get_hierachical_tree()
         if self.tree_depth != 0:
@@ -150,7 +151,7 @@ class InfoCluster:
                 return i
         return -1
 
-    def _init_g(self, X, use_pdt=False):
+    def _init_g(self, X, use_pdt=False): # pylint: disable=too-many-branches
         is_nx_graph = False
         if isinstance(X, list):
             n_samples = len(X)
