@@ -6,7 +6,11 @@ matrix:
     services: docker
     env: DOCKER_IMAGE=zhaofengshu33/lemon:v2
          PLAT=manylinux2010_x86_64
-  - os: osx
+    addons:
+      apt:
+        packages: pylint
+  - if: branch = master
+    os: osx
     osx_image: xcode9.4
     sudo: required
     addons:
@@ -14,7 +18,8 @@ matrix:
         taps: zhaofeng-shu33/liblemonformula
         packages:
           - liblemon
-  - os: osx
+  - if: branch = master
+    os: osx
     osx_image: xcode10.2 
     sudo: required
     addons:
@@ -28,7 +33,7 @@ matrix:
 
 install:
   - |
-    if [ "$TRAVIS_OS_NAME" == "osx" -a "$TRAVIS_BRANCH" == "master" ]; then
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       sudo python3 -m pip install twine wheel cython
       python3 setup.py bdist_wheel
       python3 -m twine upload dist/* -u zhaofeng-shu33 && echo success || echo "upload failed"
@@ -36,8 +41,7 @@ install:
 script:
 # used for testing
   - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      sudo pip install pylint
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then      
       pylint info_cluster
     fi
   - |
