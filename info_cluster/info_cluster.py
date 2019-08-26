@@ -64,6 +64,7 @@ class InfoCluster:
         self.partition_num_list = self.g.get_partitions()
         if initialize_tree:
             self._get_hierachical_tree()
+        return None
 
     def fit_predict(self, X):
         '''fit'''
@@ -133,12 +134,12 @@ class InfoCluster:
         if X is not None:
             self._init_g(X)
             return self.g.get_labels(i)
-        else:
-            try:
-                self.g
-            except AttributeError:
-                raise AttributeError('no data provided and category cannot be got')
-            return self.g.get_category(i)
+
+        try:
+            self.g
+        except AttributeError:
+            raise AttributeError('no data provided and category cannot be got')
+        return self.g.get_category(i)
 
     def get_num_cat(self, min_num):
         '''
