@@ -2,13 +2,12 @@ matrix:
   include: 
   - os: linux
     dist: xenial
+    language: python
+    python: 3.6
     sudo: required
     services: docker
     env: DOCKER_IMAGE=zhaofengshu33/lemon:v2
          PLAT=manylinux2010_x86_64
-    addons:
-      apt:
-        packages: pylint
   - if: branch = master
     os: osx
     osx_image: xcode9.4
@@ -32,6 +31,11 @@ matrix:
 # build and install gtest library manually    
 
 install:
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      pip install pylint
+      pip install -r info_cluster/requirement.txt
+    fi
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       sudo python3 -m pip install twine wheel cython
