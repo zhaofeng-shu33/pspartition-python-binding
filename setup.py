@@ -2,7 +2,7 @@
 # this kind of installation is more flexible and maintainable than `cmake install`
 # you can only choose one of the two installation methods.
 # before running this file, make sure psp dynamic lib exists in build directory
-import os,sys,platform
+import os, sys, platform
 if(sys.platform == 'linux' and platform.linux_distribution()[0].find('CentOS') >= 0):
     IS_CENTOS = True
 else:
@@ -15,11 +15,10 @@ with open('README.md') as fh:
     
 def find_all_cpp(dir):
     cpp_list = []
-    for dp, dn, fn in os.walk(dir):
-        for i in fn:
-            if(i.find('cpp')>0):
-                cpp_list.append(os.path.join(dp, i))
-    return cpp_list   
+    for i in os.listdir(dir):
+        if(i.find('cpp')>0):
+            cpp_list.append(os.path.join(dir, i))
+    return cpp_list
 def add_source_file(sourcefiles, cpp_file):   
     if(os.path.exists(cpp_file)):
         sourcefiles.append(cpp_file)
@@ -48,19 +47,19 @@ def set_up_cython_extension():
         if(os.path.exists(lib_dir)):
             extra_lib_dir.append(lib_dir)
     # collect library
-    sourcefiles = ['psp.pyx']
-    sourcefiles.extend(find_all_cpp(os.path.join(os.getcwd(), 'psp', 'core')))
-    set_file = os.path.join(os.getcwd(), 'psp', 'set', 'set_stl.cpp')    
+    sourcefiles = ['pspartition.pyx']
+    sourcefiles.extend(find_all_cpp(os.path.join(os.getcwd(), 'psp', 'psp')))
+    set_file = os.path.join(os.getcwd(), 'psp', 'psp', 'set', 'set_stl.cpp')    
     add_source_file(sourcefiles, set_file)
-    thread_file = os.path.join(os.getcwd(), 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
+    thread_file = os.path.join(os.getcwd(), 'psp', 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
     add_source_file(sourcefiles, thread_file)
     extra_compile_flags_list = []
     extra_link_flags_list = []    
     if(sys.platform != 'win32'):
         extra_compile_flags_list.append('-std=c++14')
-        extra_link_flags_list.append('-pthread')            
+        extra_link_flags_list.append('-pthread')     
     extensions = [
-        Extension('info_cluster.psp', sourcefiles, 
+        Extension('pspartition', sourcefiles, 
             include_dirs=extra_include_path,
             library_dirs=extra_lib_dir,
             extra_compile_args=extra_compile_flags_list,
@@ -73,9 +72,8 @@ def set_up_cython_extension():
 ext_module_class = set_up_cython_extension()
 
 setup(
-    name='info_cluster',
-    version='0.6.post1', # python binding version, not the C++ lib version
-    packages=['info_cluster'],
+    name='pspartition',
+    version='0.7', # C++ lib version directly
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",
     author_email="616545598@qq.com",
