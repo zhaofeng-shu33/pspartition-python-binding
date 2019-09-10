@@ -2,7 +2,7 @@
 # this kind of installation is more flexible and maintainable than `cmake install`
 # you can only choose one of the two installation methods.
 # before running this file, make sure psp dynamic lib exists in build directory
-import os,sys,platform
+import os, sys, platform
 if(sys.platform == 'linux' and platform.linux_distribution()[0].find('CentOS') >= 0):
     IS_CENTOS = True
 else:
@@ -15,11 +15,10 @@ with open('README.md') as fh:
     
 def find_all_cpp(dir):
     cpp_list = []
-    for dp, dn, fn in os.walk(dir):
-        for i in fn:
-            if(i.find('cpp')>0):
-                cpp_list.append(os.path.join(dp, i))
-    return cpp_list   
+    for i in os.listdir(dir):
+        if(i.find('cpp')>0):
+            cpp_list.append(os.path.join(dir, i))
+    return cpp_list
 def add_source_file(sourcefiles, cpp_file):   
     if(os.path.exists(cpp_file)):
         sourcefiles.append(cpp_file)
@@ -56,7 +55,7 @@ def set_up_cython_extension():
     extra_link_flags_list = []    
     if(sys.platform != 'win32'):
         extra_compile_flags_list.append('-std=c++14')
-        extra_link_flags_list.append('-pthread')            
+        extra_link_flags_list.append('-pthread')     
     extensions = [
         Extension('pspartition', sourcefiles, 
             include_dirs=extra_include_path,

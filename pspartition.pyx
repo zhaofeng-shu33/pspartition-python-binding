@@ -24,13 +24,22 @@ cdef class PsPartition:
     def get_critical_values(self):
         return self.psp.get_critical_values()
         
-    #def get_partitions(self):
-    #    return self.psp.get_partitions()
-        
+    def get_partitions(self):
+        cdef v_p v_p_instance
+        v_p_instance = self.psp.get_partitions()
+        py_partition_list = []
+        for partition_instance in v_p_instance:
+            py_partition = []
+            for set_instance in partition_instance:
+                py_set = {}
+                for i in set_instance:
+                    py_set.add(i)
+                py_partition.append(py_set)
+            py_partition_list.append(py_partition)
+            
     def run(self, py_method_name='psp_i'):
-        cdef string method = py_method_name
+        cdef string method = py_method_name.encode('ascii')
         self.psp.run(method)
         
-#cdef class Partition:
 
         
