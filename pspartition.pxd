@@ -3,17 +3,20 @@ from libcpp.string cimport string
 ctypedef vector[int] v_i
 ctypedef vector[double] v_d
 cdef extern from "psp/set/set_stl.h" namespace "stl":
-    cdef cppclass Set[int]:
+    cdef cppclass CSet:
         cppclass iterator:
-            pass
+            int& operator*()
+            iterator operator++()
+            bint operator!=(iterator)
         iterator begin()
         iterator end()
     cdef cppclass Partition:
         cppclass iterator:
-            pass
+            CSet& operator*()
+            iterator operator++()
+            bint operator!=(iterator)
         iterator begin()
         iterator end()
-        
 ctypedef vector[Partition] v_p          
 cdef extern from "psp/psp.h" namespace "psp":
     cdef cppclass PSP:
