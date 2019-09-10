@@ -33,6 +33,8 @@ def set_up_cython_extension():
     extra_lib_dir = []
     if sys.platform == 'win32':
         lemon_lib_name = 'lemon'
+    elif sys.platform == 'linux' and not IS_CENTOS: # ubuntu 16.04
+        lemon_lib_name = 'lemon'
     else:
         lemon_lib_name = 'emon'
         
