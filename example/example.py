@@ -4,6 +4,8 @@ if __name__ == '__main__':
     p = PsPartition(3, a) # 3 nodes
     p.run()
     cv = p.get_critical_values()
+    pl = p.get_partitions()
     print(cv)
+    print(pl)
 
     

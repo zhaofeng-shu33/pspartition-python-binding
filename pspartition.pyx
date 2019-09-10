@@ -31,7 +31,7 @@ cdef class PsPartition:
         for partition_instance in v_p_instance:
             py_partition = []
             for set_instance in partition_instance:
-                py_set = {}
+                py_set = set()
                 for i in set_instance:
                     py_set.add(i)
                 py_partition.append(py_set)
