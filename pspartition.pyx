@@ -36,7 +36,8 @@ cdef class PsPartition:
                     py_set.add(i)
                 py_partition.append(py_set)
             py_partition_list.append(py_partition)
-            
+        return py_partition_list
+    
     def run(self, py_method_name='psp_i'):
         cdef string method = py_method_name.encode('ascii')
         self.psp.run(method)
