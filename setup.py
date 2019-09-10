@@ -46,11 +46,11 @@ def set_up_cython_extension():
         if(os.path.exists(lib_dir)):
             extra_lib_dir.append(lib_dir)
     # collect library
-    sourcefiles = ['psp.pyx']
-    sourcefiles.extend(find_all_cpp(os.path.join(os.getcwd(), 'psp', 'core')))
-    set_file = os.path.join(os.getcwd(), 'psp', 'set', 'set_stl.cpp')    
+    sourcefiles = ['pspartition.pyx']
+    sourcefiles.extend(find_all_cpp(os.path.join(os.getcwd(), 'psp', 'psp')))
+    set_file = os.path.join(os.getcwd(), 'psp', 'psp', 'set', 'set_stl.cpp')    
     add_source_file(sourcefiles, set_file)
-    thread_file = os.path.join(os.getcwd(), 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
+    thread_file = os.path.join(os.getcwd(), 'psp', 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
     add_source_file(sourcefiles, thread_file)
     extra_compile_flags_list = []
     extra_link_flags_list = []    
@@ -58,7 +58,7 @@ def set_up_cython_extension():
         extra_compile_flags_list.append('-std=c++14')
         extra_link_flags_list.append('-pthread')            
     extensions = [
-        Extension('info_cluster.psp', sourcefiles, 
+        Extension('pspartition', sourcefiles, 
             include_dirs=extra_include_path,
             library_dirs=extra_lib_dir,
             extra_compile_args=extra_compile_flags_list,
@@ -71,9 +71,8 @@ def set_up_cython_extension():
 ext_module_class = set_up_cython_extension()
 
 setup(
-    name='info_cluster',
-    version='0.6.post1', # python binding version, not the C++ lib version
-    packages=['info_cluster'],
+    name='pspartition',
+    version='0.7', # C++ lib version directly
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",
     author_email="616545598@qq.com",
