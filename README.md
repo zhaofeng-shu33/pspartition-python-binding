@@ -40,28 +40,21 @@ The output is like
    \-1
 ```
 ```Python
-import psp # classify the three data points shown in the above figure
-g = psp.PyGraph(3, [(0,1,1),(1,2,1),(0,2,5)]) # index started from zero, similarity is 5 for vertex 0 and 2
-g.run() # use maximal flow algorithm to classify them
+import pspartition # classify the three data points shown in the above figure
+g = pspartion.PsPartition(3, [(0,1,1),(1,2,1),(0,2,5)]) # index started from zero, similarity is 5 for vertex 0 and 2
+g.run() # default to use psp_i algorithm to classify them
 print(g.get_critical_values()) # [2,5]
-print(g.get_category(2)) # get the result which has at least 2 categories, which is [0,1,0]
+print(g.get_partitions()) # get the result which has at least 2 categories, which is [0,1,0]
 ```
 
 ## Parametric Dilworth Truncation(pdt) implementation
-We provide another alternative implementation, which can be used similar to **PyGraph**.
-To make it work, you should apply a patch [preflow.patch](./preflow.patch) to `preflow.h` before building, which belongs to lemon library 1.3.1, see
+To make `pdt` work, you should apply a patch [preflow.patch](./preflow.patch) to `preflow.h` before building, which belongs to lemon library 1.3.1, see
 [#625](https://lemon.cs.elte.hu/trac/lemon/ticket/625).
 
-```Python
-import psp
-g = psp.PyGraphPDT(3, [(0,1,1),(1,2,1),(0,2,5)]) # index started from zero, similarity is 5 for vertex 0 and 2
-g.run() # use maximal flow algorithm to classify them
-print(g.get_critical_values()) # [2,5]
-print(g.get_category(2)) # get the result which has at least 2 categories, which is [0,1,0]
-```
 
 ## ChangeLog
 
 - Version 0.2: expose `PSP` (C++) class, which is high customizable in python.
 - Version 0.3: expose `PyGraphPDT` (C++) class, which has similar API as `PyGraph` but different inner implementation.
-- Version 0.5: expose `run_psp_i` ` for `InfoCluster`
+- Version 0.5: expose `run_psp_i` ` for `InfoCluster`.
+- Version 0.7: change the python binding name from `info_cluster` to `pspartition`.
