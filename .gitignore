@@ -8,4 +8,4 @@ info_cluster/*.so
 info_cluster.egg-info/
 */__pycache__
 .vscode
-psp.cpp
+pspartition.cpp
