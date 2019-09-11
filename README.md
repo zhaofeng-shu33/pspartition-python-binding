@@ -2,11 +2,11 @@
 [![Appveyor](https://ci.appveyor.com/api/projects/status/github/zhaofeng-shu33/info-clustering-python-binding?branch=master&svg=true)](https://ci.appveyor.com/project/zhaofeng-shu33/info-clustering-python-binding)
 
 # Python binding
-[![PyPI](https://img.shields.io/pypi/v/info_cluster.svg)](https://pypi.org/project/info_cluster)
+[![PyPI](https://img.shields.io/pypi/v/pspartition.svg)](https://pypi.org/project/pspartition.svg)
 ## How to build
 The binding uses `Cython`. 
 To package the library, use `python setup.py bdist_wheel`.
-Install the package by `pip install --user info_cluster`. 
+Install the package by `pip install --user pspartition`. 
 Below is the prebuilt binary packages:
 
 | Platform | py3.6 | py3.7 |
