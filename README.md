@@ -2,7 +2,7 @@
 [![Appveyor](https://ci.appveyor.com/api/projects/status/github/zhaofeng-shu33/info-clustering-python-binding?branch=master&svg=true)](https://ci.appveyor.com/project/zhaofeng-shu33/info-clustering-python-binding)
 
 # Python binding
-[![PyPI](https://img.shields.io/pypi/v/pspartition.svg)](https://pypi.org/project/pspartition.svg)
+[![PyPI](https://img.shields.io/pypi/v/pspartition.svg)](https://pypi.org/project/pspartition)
 ## How to build
 The binding uses `Cython`. 
 To package the library, use `python setup.py bdist_wheel`.
@@ -56,5 +56,5 @@ To make `pdt` work, you should apply a patch [preflow.patch](./preflow.patch) to
 
 - Version 0.2: expose `PSP` (C++) class, which is high customizable in python.
 - Version 0.3: expose `PyGraphPDT` (C++) class, which has similar API as `PyGraph` but different inner implementation.
-- Version 0.5: expose `run_psp_i` ` for `InfoCluster`.
+- Version 0.5: expose `run_psp_i`  for `InfoCluster`.
 - Version 0.7: change the python binding name from `info_cluster` to `pspartition`.

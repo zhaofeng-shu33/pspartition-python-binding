@@ -1,4 +1,5 @@
 # distutils: language = c++
+# cython: embedsignature=True
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from pspartition cimport PSP
@@ -22,9 +23,11 @@ cdef class PsPartition:
         del self.psp
         
     def get_critical_values(self):
+        '''get the critical value list'''
         return self.psp.get_critical_values()
         
     def get_partitions(self):
+        '''get the partition list'''
         cdef v_p v_p_instance
         v_p_instance = self.psp.get_partitions()
         py_partition_list = []
@@ -39,6 +42,7 @@ cdef class PsPartition:
         return py_partition_list
     
     def run(self, py_method_name='psp_i'):
+        '''run principal sequence of partition algorithm'''
         cdef string method = py_method_name.encode('ascii')
         self.psp.run(method)
         
