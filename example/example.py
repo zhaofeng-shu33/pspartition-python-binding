@@ -1,11 +1,11 @@
-from info_cluster import InfoCluster
-import networkx as nx
+from pspartition import PsPartition
 if __name__ == '__main__':
-    g = nx.Graph() # undirected graph
-    g.add_edge(0, 1, weight=1)
-    g.add_edge(1, 2, weight=1)
-    g.add_edge(0, 2, weight=5)
-    ic = InfoCluster(affinity='precomputed') # use precomputed graph structure
-    ic.fit(g)
-    ic.print_hierachical_tree()
-    print('depth: ', ic.get_tree_depth())
+    a = [[0,1,1], [0,2,1], [1,2,5]] # a graph
+    p = PsPartition(3, a) # 3 nodes
+    p.run()
+    cv = p.get_critical_values()
+    pl = p.get_partitions()
+    print(cv)
+    print(pl)
+
+    

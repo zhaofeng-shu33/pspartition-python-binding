@@ -51,7 +51,7 @@ script:
     fi
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" -a "$TRAVIS_BRANCH" == "master" ]; then
-      python -m pip install twine
+      pip install twine
       docker run --rm -e PLAT=$PLAT -v `pwd`:/code $DOCKER_IMAGE /bin/bash -c 'cd /code; ./build.sh'
       python -m twine upload dist/wheelhouse/*.whl -u zhaofeng-shu33 && echo success || echo "upload failed"
     fi
