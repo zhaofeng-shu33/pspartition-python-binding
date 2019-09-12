@@ -7,7 +7,7 @@
 The binding uses `Cython`. 
 To package the library, use `python setup.py bdist_wheel`.
 Install the package by `pip install --user pspartition`. 
-Below is the prebuilt binary packages:
+Below is the pre-built binary packages:
 
 | Platform | py3.6 | py3.7 |
 | -------- | :---: | :---: |
@@ -16,7 +16,7 @@ Below is the prebuilt binary packages:
 | Linux    |   T   |   T   |
 
 ## Demo code
-![](example.png)
+![](./example/example.png)
 
 ```Python
 import pspartition # classify the three data points shown in the above figure
@@ -26,9 +26,7 @@ print(g.get_critical_values()) # [2,5]
 print(g.get_partitions()) # get the result which has at least 2 categories, which is [0,1,0]
 ```
 
-## Parametric Dilworth Truncation(pdt) implementation
-To make `pdt` work, you should apply a patch [preflow.patch](./preflow.patch) to `preflow.h` before building, which belongs to lemon library 1.3.1, see
-[#625](https://lemon.cs.elte.hu/trac/lemon/ticket/625).
+
 
 
 ## ChangeLog
