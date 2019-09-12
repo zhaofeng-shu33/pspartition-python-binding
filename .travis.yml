@@ -18,8 +18,7 @@ matrix:
         taps: zhaofeng-shu33/liblemonformula
         packages:
           - liblemon
-  - if: branch = master
-    os: osx
+  - os: osx
     osx_image: xcode10.2 
     sudo: required
     addons:

@@ -17,28 +17,7 @@ Below is the prebuilt binary packages:
 
 ## Demo code
 ![](example.png)
-We provide a high-level wrapper of info-clustering algorithm. 
-After installing `info_cluster`, you can use it as follows:
 
-```Python
-from info_cluster import InfoCluster
-import networkx as nx
-g = nx.Graph() # undirected graph
-g.add_edge(0, 1, weight=1)
-g.add_edge(1, 2, weight=1)
-g.add_edge(0, 2, weight=5)
-ic = InfoCluster(affinity='precomputed') # use precomputed graph structure
-ic.fit(g)
-ic.print_hierarchical_tree()
-```
-The output is like
-```shell
-      /-0
-   /-|
---|   \-2
-  |
-   \-1
-```
 ```Python
 import pspartition # classify the three data points shown in the above figure
 g = pspartion.PsPartition(3, [(0,1,1),(1,2,1),(0,2,5)]) # index started from zero, similarity is 5 for vertex 0 and 2

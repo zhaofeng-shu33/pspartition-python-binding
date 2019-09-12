@@ -7,7 +7,7 @@ from sklearn.neighbors import kneighbors_graph
 import networkx as nx
 from ete3 import Tree
 # [package] principal sequence of partition
-from . import psp # pylint: disable=no-name-in-module
+from pspartition import PsPartition # pylint: disable=no-name-in-module
 
 class InfoCluster: # pylint: disable=too-many-instance-attributes
     '''Info clustering is a kind of hierarchical clustering method.
@@ -23,49 +23,34 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
     n_neighbors : integer
         Number of neighbors to use when constructing the affinity matrix using
         the nearest neighbors method. Ignored for ``affinity='rbf'``.
-    n_clusters : integer
-        suggested minimum number of clusters required, default is None
     '''
-    def __init__(self, gamma=1, affinity='rbf', n_neighbors=10, n_clusters=None):
+    def __init__(self, gamma=1, affinity='rbf', n_neighbors=10):
         self._gamma = gamma
         self.affinity = affinity
         self.n_neighbors = n_neighbors
-        self.n_clusters = n_clusters
         self.tree = Tree()
         self.tree_depth = 0
         self.g = None
         self.critical_values = []
-        self.partition_num_list = []
+        self.partition_list = []
+        self.num_points = 0
 
-    def fit(self, X, use_pdt=False, use_psp_i=False, use_pdt_r=False, initialize_tree=True): # pylint: disable=too-many-arguments
+    def fit(self, X, initialize_tree=True): # pylint: disable=too-many-arguments
         '''Construct an affinity graph from X using rbf kernel function,
         then applies info clustering to this affinity graph.
         Parameters
         ----------
         X : array-like, shape (n_samples, n_features)
             if affinity='precomputed', X is networkx like object or affinity matrix(upper triangle)
-        use_pdt : whether to use simplified version of prametric Dilworth truncation method
-        use_psp_i : whether to use improved principal sequence of partition method
-        use_pdt_r: whether to use original version of prametric Dilworth truncation method
         '''
-        if((use_pdt and use_psp_i) or (use_psp_i and use_pdt_r)):
-            raise ValueError("only one of use_pdt(_r) and use_psp_i can be set True")
         self.tree = Tree() # clear the tree
-        if self.n_clusters is not None and use_pdt is False:
-            return self.get_category(self.n_clusters, X)
-        self._init_g(X, use_pdt or use_pdt_r)
-        if use_psp_i:
-            self.g.run_psp_i()
-        elif use_pdt_r:
-            self.g.run_pdt_r()
-        else:
-            self.g.run()
-
+        self._init_g(X)
+        self.g.run()
         self.critical_values = self.g.get_critical_values()
-        self.partition_num_list = self.g.get_partitions()
+        self.partition_list = self.g.get_partitions()
+        self.num_points = len(self.partition_list[-1])
         if initialize_tree:
             self._get_hierachical_tree()
-        return None
 
     def fit_predict(self, X):
         '''fit'''
@@ -73,7 +58,7 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
 
     def _add_node(self, root, node_list, num_index):
         root.add_features(cv=self.critical_values[num_index-1])
-        label_list = self.get_category(self.partition_num_list[num_index])
+        label_list = self.get_category(num_index)
         cat_list = []
         for i in node_list:
             if cat_list.count(label_list[i]) == 0:
@@ -93,7 +78,7 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
                 self._add_node(root_i, node_list_i, num_index+1)
 
     def _get_hierachical_tree(self):
-        max_num = self.partition_num_list[-1]
+        max_num = self.num_points
         node_list = [i for i in range(0, max_num)]
         self._add_node(self.tree, node_list, 1)
 
@@ -121,7 +106,7 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
             self._get_hierachical_tree()
         print(self.tree)
 
-    def get_category(self, i, X=None):
+    def get_category(self, min_num):
         '''get the clustering labels with the number of clusters no smaller than i
         Parameters
         ----------
@@ -133,26 +118,25 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
         --------
         list, with each element of the list denoting the label of the cluster.
         '''
-        if X is not None:
-            self._init_g(X)
-            return self.g.get_labels(i)
+        partition = self.get_partition(min_num)
+        cat = np.zeros(self.num_points)
+        label_index = 0
+        for i in partition:
+            for j in i:
+                cat[j] = label_index
+            label_index += 1
+        return cat
 
-        try:
-            self.g
-        except AttributeError:
-            raise AttributeError('no data provided and category cannot be got')
-        return self.g.get_category(i)
-
-    def get_num_cat(self, min_num):
+    def get_partition(self, min_num):
         '''
         return the index of partition whose first element is no smaller than min_num,
         '''
-        for i in self.partition_num_list:
-            if i >= min_num:
+        for i in self.partition_list:
+            if len(i) >= min_num:
                 return i
-        return -1
+        raise ValueError('cluster with min num %d not found' % min_num)
 
-    def _init_g(self, X, use_pdt=False): # pylint: disable=too-many-branches
+    def _init_g(self, X): # pylint: disable=too-many-branches
         is_nx_graph = False
         if isinstance(X, list):
             n_samples = len(X)
@@ -196,7 +180,4 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
             for s_j in range(s_i+1, n_samples):
                 sim_list.append((s_i, s_j, affinity_matrix[s_i, s_j]))
 
-        if use_pdt:
-            self.g = psp.PyGraphPDT(n_samples, sim_list)
-        else:
-            self.g = psp.PyGraph(n_samples, sim_list)
+        self.g = PsPartition(n_samples, sim_list)
