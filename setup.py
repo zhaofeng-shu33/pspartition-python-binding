@@ -7,7 +7,7 @@ import os
 import sys
 import platform
 from setuptools import setup, Extension
-from Cython.Build import cythonize # pylint: disable=no-name-in-module
+from Cython.Build import cythonize # pylint: disable=import-error
 
 IS_CENTOS = sys.platform == 'linux' and platform.platform().find('CentOS') >= 0
 
