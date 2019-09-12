@@ -58,7 +58,7 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
 
     def _add_node(self, root, node_list, num_index):
         root.add_features(cv=self.critical_values[num_index-1])
-        label_list = self.get_category(num_index)
+        label_list = self._partition_to_category(self.partition_list[num_index])
         cat_list = []
         for i in node_list:
             if cat_list.count(label_list[i]) == 0:
@@ -77,6 +77,15 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
             if len(node_list_i) > 1:
                 self._add_node(root_i, node_list_i, num_index+1)
 
+    def _partition_to_category(self, partition):
+        cat = np.zeros(self.num_points)
+        label_index = 0
+        for i in partition:
+            for j in i:
+                cat[j] = label_index
+            label_index += 1
+        return cat
+    
     def _get_hierachical_tree(self):
         max_num = self.num_points
         node_list = [i for i in range(0, max_num)]
@@ -119,13 +128,7 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
         list, with each element of the list denoting the label of the cluster.
         '''
         partition = self.get_partition(min_num)
-        cat = np.zeros(self.num_points)
-        label_index = 0
-        for i in partition:
-            for j in i:
-                cat[j] = label_index
-            label_index += 1
-        return cat
+        return self._partition_to_category(partition)
 
     def get_partition(self, min_num):
         '''
