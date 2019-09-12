@@ -3,7 +3,7 @@
 # you can only choose one of the two installation methods.
 # before running this file, make sure psp dynamic lib exists in build directory
 import os, sys, platform
-if(sys.platform == 'linux' and platform.linux_distribution()[0].find('CentOS') >= 0):
+if sys.platform == 'linux' and platform.linux_distribution()[0].find('CentOS') >= 0:
     IS_CENTOS = True
 else:
     IS_CENTOS = False    
@@ -16,11 +16,11 @@ with open('README.md') as fh:
 def find_all_cpp(dir):
     cpp_list = []
     for i in os.listdir(dir):
-        if(i.find('cpp')>0):
+        if i.find('cpp') > 0:
             cpp_list.append(os.path.join(dir, i))
     return cpp_list
 def add_source_file(sourcefiles, cpp_file):   
-    if(os.path.exists(cpp_file)):
+    if os.path.exists(cpp_file):
         sourcefiles.append(cpp_file)
     else:
         raise FileNotFoundError(cpp_file)
@@ -37,14 +37,14 @@ def set_up_cython_extension():
     else:
         lemon_lib_name = 'emon'
         
-    if(os.environ.get('VCPKG_ROOT')):
+    if os.environ.get('VCPKG_ROOT'):
         root_dir = os.environ['VCPKG_ROOT']
         triplet = os.environ.get('VCPKG_DEFAULT_TRIPLET', 'x64-windows')
         include_dir = os.path.join(root_dir, 'installed', triplet, 'include')
-        if(os.path.exists(include_dir)):
+        if os.path.exists(include_dir):
             extra_include_path.append(include_dir)
         lib_dir = os.path.join(root_dir, 'installed', triplet, 'lib')
-        if(os.path.exists(lib_dir)):
+        if os.path.exists(lib_dir):
             extra_lib_dir.append(lib_dir)
     # collect library
     sourcefiles = ['pspartition.pyx']
@@ -54,18 +54,18 @@ def set_up_cython_extension():
     thread_file = os.path.join(os.getcwd(), 'psp', 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
     add_source_file(sourcefiles, thread_file)
     extra_compile_flags_list = []
-    extra_link_flags_list = []    
-    if(sys.platform != 'win32'):
+    extra_link_flags_list = []
+    if sys.platform != 'win32':
         extra_compile_flags_list.append('-std=c++14')
         extra_link_flags_list.append('-pthread')     
     extensions = [
         Extension('pspartition', sourcefiles, 
-            include_dirs=extra_include_path,
-            library_dirs=extra_lib_dir,
-            extra_compile_args=extra_compile_flags_list,
-            extra_link_args=extra_link_flags_list,
-            libraries = [lemon_lib_name]
-        )
+                  include_dirs=extra_include_path,
+                  library_dirs=extra_lib_dir,
+                  extra_compile_args=extra_compile_flags_list,
+                  extra_link_args=extra_link_flags_list,
+                  libraries=[lemon_lib_name]
+                 )
     ]
     return cythonize(extensions)
 
@@ -73,16 +73,16 @@ ext_module_class = set_up_cython_extension()
 
 setup(
     name='pspartition',
-    version='0.7', # C++ lib version directly
+    version='0.7.post1', # different with C++ lib version
     ext_modules=ext_module_class,
     author="zhaofeng-shu33",
     author_email="616545598@qq.com",
     description="a hierachical clustering algorithm based on information theory",
     url="https://github.com/zhaofeng-shu33/principal_sequence_of_partition",
-    long_description = long_description,
-    long_description_content_type="text/markdown",        
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python :: 3",
-    ], 
+    ],
     license="Apache License Version 2.0",
 )
