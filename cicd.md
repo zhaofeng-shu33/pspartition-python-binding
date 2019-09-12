@@ -1,8 +1,8 @@
 # CI
 ## Overview
-This project relies on `liblemon`. 
-To integrate with python build system, we need to write custom wrapper to invoke
-cmake in `setup.py`. This is also a source of complexity.
+This project relies on `liblemon` to be build. 
+Notice that `liblemon` should be patched if you install the stable version (1.3.1). Installation of the latest development version of `lemon` does not have the problem.
+See [#625](https://lemon.cs.elte.hu/trac/lemon/ticket/625) for detail.
 
 ## Procedure common to all platforms
 use `python setup.py bdist_wheel` to build the wheel
@@ -13,15 +13,12 @@ We use `vcpkg` to fix the `liblemon` dependency. You should install `liblemon:x6
 
 ### Mac
 
-We use `homebrew` personal tap to package `liblemon` until official `homebrew-core` integrate this library.
-Notice that `liblemon` should be patched.
+We use `homebrew` personal tap to package `liblemon`. You can add a tap pointing to [zhaofeng-shu33/liblemonformula](https://github.com/zhaofeng-shu33/homebrew-liblemonformula).
 
 ### Manylinux
 The manylinux wheel is built by specific docker image. See the repository [lemon-docker](https://gitee.com/freewind201301/lemon-docker.git) for detail.
 
-
-
 ## Installation Test
-We install the package on systems without no boost-python.
+We install the package on systems from fresh virtual machine.
 See [install test](https://github.com/zhaofeng-shu33/info_cluster_install_test)
 

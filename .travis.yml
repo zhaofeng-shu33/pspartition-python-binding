@@ -18,8 +18,7 @@ matrix:
         taps: zhaofeng-shu33/liblemonformula
         packages:
           - liblemon
-  - if: branch = master
-    os: osx
+  - os: osx
     osx_image: xcode10.2 
     sudo: required
     addons:
@@ -27,9 +26,6 @@ matrix:
         taps: zhaofeng-shu33/liblemonformula
         packages:
           - liblemon
-
-# - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libboost-all-dev; fi
-# build and install gtest library manually    
 
 install:
   - |
@@ -40,14 +36,21 @@ install:
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       sudo python3 -m pip install twine wheel cython
+    fi    
+script:
+  - |
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      python3 setup.py install
+      python3 -m unittest test.py
+    fi
+  - |
+    if [ "$TRAVIS_OS_NAME" == "osx" -a "$TRAVIS_BRANCH" == "master" ]; then
       python3 setup.py bdist_wheel
       python3 -m twine upload dist/* -u zhaofeng-shu33 && echo success || echo "upload failed"
     fi    
-script:
-# used for testing
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then      
-      pylint info_cluster
+      pylint info_cluster setup.py
     fi
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" -a "$TRAVIS_BRANCH" == "master" ]; then

@@ -3,3 +3,4 @@ scikit-learn
 ete3
 six
 networkx
+pspartition
