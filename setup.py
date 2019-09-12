@@ -1,33 +1,37 @@
-# we use this setup.py to build wheels of info-clustering package
-# this kind of installation is more flexible and maintainable than `cmake install`
-# you can only choose one of the two installation methods.
-# before running this file, make sure psp dynamic lib exists in build directory
-import os, sys, platform
-if sys.platform == 'linux' and platform.linux_distribution()[0].find('CentOS') >= 0:
-    IS_CENTOS = True
-else:
-    IS_CENTOS = False    
+'''we use this setup.py to build wheels of info-clustering package
+this kind of installation is more flexible and maintainable than `cmake install`
+you can only choose one of the two installation methods.
+before running this file, make sure psp dynamic lib exists in build directory
+'''
+import os
+import sys
+import platform
 from setuptools import setup, Extension
 from Cython.Build import cythonize
 
+IS_CENTOS = sys.platform == 'linux' and platform.platform().find('CentOS') >= 0
+
 with open('README.md') as fh:
-    long_description = fh.read()
-    
-def find_all_cpp(dir):
+    LONG_DESCRIPTION = fh.read()
+
+#pylint: disable=missing-docstring
+
+def find_all_cpp(given_dir):
     cpp_list = []
-    for i in os.listdir(dir):
+    for i in os.listdir(given_dir):
         if i.find('cpp') > 0:
-            cpp_list.append(os.path.join(dir, i))
+            cpp_list.append(os.path.join(given_dir, i))
     return cpp_list
-def add_source_file(sourcefiles, cpp_file):   
+
+def add_source_file(sourcefiles, cpp_file):
     if os.path.exists(cpp_file):
         sourcefiles.append(cpp_file)
     else:
         raise FileNotFoundError(cpp_file)
-        
+
 def set_up_cython_extension():
     extra_include_path = []
-    extra_include_path.append(os.path.join(os.getcwd(),'psp'))
+    extra_include_path.append(os.path.join(os.getcwd(), 'psp'))
 
     extra_lib_dir = []
     if sys.platform == 'win32':
@@ -36,7 +40,7 @@ def set_up_cython_extension():
         lemon_lib_name = 'lemon'
     else:
         lemon_lib_name = 'emon'
-        
+
     if os.environ.get('VCPKG_ROOT'):
         root_dir = os.environ['VCPKG_ROOT']
         triplet = os.environ.get('VCPKG_DEFAULT_TRIPLET', 'x64-windows')
@@ -49,17 +53,18 @@ def set_up_cython_extension():
     # collect library
     sourcefiles = ['pspartition.pyx']
     sourcefiles.extend(find_all_cpp(os.path.join(os.getcwd(), 'psp', 'psp')))
-    set_file = os.path.join(os.getcwd(), 'psp', 'psp', 'set', 'set_stl.cpp')    
+    set_file = os.path.join(os.getcwd(), 'psp', 'psp', 'set', 'set_stl.cpp')
     add_source_file(sourcefiles, set_file)
-    thread_file = os.path.join(os.getcwd(), 'psp', 'psp', 'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
+    thread_file = os.path.join(os.getcwd(), 'psp', 'psp',
+                               'preflow', 'InterruptibleThread', 'InterruptibleThread.cpp')
     add_source_file(sourcefiles, thread_file)
     extra_compile_flags_list = []
     extra_link_flags_list = []
     if sys.platform != 'win32':
         extra_compile_flags_list.append('-std=c++14')
-        extra_link_flags_list.append('-pthread')     
+        extra_link_flags_list.append('-pthread')
     extensions = [
-        Extension('pspartition', sourcefiles, 
+        Extension('pspartition', sourcefiles,
                   include_dirs=extra_include_path,
                   library_dirs=extra_lib_dir,
                   extra_compile_args=extra_compile_flags_list,
@@ -69,17 +74,17 @@ def set_up_cython_extension():
     ]
     return cythonize(extensions)
 
-ext_module_class = set_up_cython_extension()
+EXT_MODULE_CLASS = set_up_cython_extension()
 
 setup(
     name='pspartition',
     version='0.7.post1', # different with C++ lib version
-    ext_modules=ext_module_class,
+    ext_modules=EXT_MODULE_CLASS,
     author="zhaofeng-shu33",
     author_email="616545598@qq.com",
     description="a hierachical clustering algorithm based on information theory",
     url="https://github.com/zhaofeng-shu33/principal_sequence_of_partition",
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -11,4 +11,3 @@ $PY37/pip wheel . -w dist/
 for whl in dist/*.whl; do
     auditwheel repair "$whl" --plat $PLAT -w dist/wheelhouse/
 done
-
