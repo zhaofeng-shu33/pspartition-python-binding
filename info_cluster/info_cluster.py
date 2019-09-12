@@ -6,7 +6,6 @@ from sklearn.metrics.pairwise import pairwise_kernels
 from sklearn.neighbors import kneighbors_graph
 import networkx as nx
 from ete3 import Tree
-# [package] principal sequence of partition
 from pspartition import PsPartition # pylint: disable=no-name-in-module
 
 class InfoCluster: # pylint: disable=too-many-instance-attributes
@@ -85,7 +84,7 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
                 cat[j] = label_index
             label_index += 1
         return cat
-    
+
     def _get_hierachical_tree(self):
         max_num = self.num_points
         node_list = [i for i in range(0, max_num)]
