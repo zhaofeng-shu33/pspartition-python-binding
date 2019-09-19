@@ -2,11 +2,11 @@ __pycache__
 .DS_Store
 build/
 dist/*
-info_cluster/psp.so
 *.pyd
 info_cluster/*.pyd
 *.so
 info_cluster/*.so
+pspartition.egg-info/
 info_cluster.egg-info/
 */__pycache__
 .vscode
