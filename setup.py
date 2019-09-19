@@ -9,7 +9,7 @@ import platform
 from setuptools import setup, Extension
 from Cython.Build import cythonize # pylint: disable=import-error
 
-IS_CENTOS = sys.platform == 'linux' and platform.platform().find('CentOS') >= 0
+IS_CENTOS = sys.platform == 'linux' and platform.platform().find('centos') >= 0
 
 with open('README.md') as fh:
     LONG_DESCRIPTION = fh.read()
