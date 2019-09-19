@@ -9,7 +9,7 @@ import platform
 from setuptools import setup, Extension
 from Cython.Build import cythonize # pylint: disable=import-error
 
-IS_CENTOS = sys.platform == 'linux' and platform.platform().find('CentOS') >= 0
+IS_CENTOS = sys.platform == 'linux' and platform.platform().find('centos') >= 0
 
 with open('README.md') as fh:
     LONG_DESCRIPTION = fh.read()
@@ -78,7 +78,7 @@ EXT_MODULE_CLASS = set_up_cython_extension()
 
 setup(
     name='pspartition',
-    version='0.7.post1', # different with C++ lib version
+    version='0.7.post2', # different with C++ lib version
     ext_modules=EXT_MODULE_CLASS,
     author="zhaofeng-shu33",
     author_email="616545598@qq.com",
