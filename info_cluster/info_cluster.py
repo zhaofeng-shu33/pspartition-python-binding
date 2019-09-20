@@ -118,9 +118,7 @@ class InfoCluster: # pylint: disable=too-many-instance-attributes
         '''get the clustering labels with the number of clusters no smaller than i
         Parameters
         ----------
-        i : int, number of cluster threshold
-        X : array-like, shape (n_samples, n_features). if provided,
-            recompute the result targeted only at the specified `i`.
+        min_num : int, minimal number of cluster
 
         Returns
         --------
