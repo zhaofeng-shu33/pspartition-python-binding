@@ -5,7 +5,7 @@ with open('README_ic.md') as fh:
     
 setuptools.setup(
     name='info_cluster',
-    version='0.7',
+    version='0.8',
     packages=setuptools.find_packages(),
     install_requires=['numpy', 'scikit-learn', 'ete3', 'networkx', 'pspartition'],
     author="zhaofeng-shu33",
