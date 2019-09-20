@@ -1,5 +1,5 @@
-[![Travis](https://api.travis-ci.com/zhaofeng-shu33/info-clustering-python-binding.svg?branch=master)](https://travis-ci.com/zhaofeng-shu33/info-clustering-python-binding)
-[![Appveyor](https://ci.appveyor.com/api/projects/status/github/zhaofeng-shu33/info-clustering-python-binding?branch=master&svg=true)](https://ci.appveyor.com/project/zhaofeng-shu33/info-clustering-python-binding)
+[![Travis](https://api.travis-ci.com/zhaofeng-shu33/pspartition-python-binding.svg?branch=master)](https://travis-ci.com/zhaofeng-shu33/pspartition-python-binding)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/github/zhaofeng-shu33/pspartition-python-binding?branch=master&svg=true)](https://ci.appveyor.com/project/zhaofeng-shu33/pspartition-python-binding)
 
 # Python binding
 [![PyPI](https://img.shields.io/pypi/v/pspartition.svg)](https://pypi.org/project/pspartition)

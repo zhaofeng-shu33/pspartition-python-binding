@@ -31,7 +31,6 @@ install:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       pip install pylint
-      pip install -r info_cluster/requirement.txt
     fi
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -50,7 +49,7 @@ script:
     fi    
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then      
-      pylint info_cluster setup.py
+      pylint setup.py
     fi
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" -a "$TRAVIS_BRANCH" == "master" ]; then
