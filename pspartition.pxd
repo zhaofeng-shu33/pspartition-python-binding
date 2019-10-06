@@ -23,6 +23,6 @@ cdef extern from "psp/psp.h" namespace "psp":
         PSP(v_i, v_i, v_d, int) except +
         v_d get_critical_values()
         v_p get_partitions()
-        void run(string)
+        void run(string) except +
 
       
