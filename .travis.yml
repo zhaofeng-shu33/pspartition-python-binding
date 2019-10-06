@@ -30,7 +30,7 @@ matrix:
 install:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      pip install pylint==2.3.1
+      pip install astroid==2.2.5 pylint==2.3.1
     fi
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
