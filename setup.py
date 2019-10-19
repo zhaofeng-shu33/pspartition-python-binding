@@ -61,7 +61,7 @@ def set_up_cython_extension():
     extra_compile_flags_list = []
     extra_link_flags_list = []
     if sys.platform != 'win32':
-        extra_compile_flags_list.append('-std=c++14')
+        extra_compile_flags_list.extend(['-std=c++14', '-g0'])
         extra_link_flags_list.append('-pthread')
     extensions = [
         Extension('pspartition', sourcefiles,
@@ -78,7 +78,7 @@ EXT_MODULE_CLASS = set_up_cython_extension()
 
 setup(
     name='pspartition',
-    version='0.7.post4', # different with C++ lib version
+    version='0.7.post5', # different with C++ lib version
     ext_modules=EXT_MODULE_CLASS,
     author="zhaofeng-shu33",
     author_email="616545598@qq.com",
